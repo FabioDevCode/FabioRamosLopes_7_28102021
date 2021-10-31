@@ -1,15 +1,15 @@
 const express = require('express');
+const morgan = require('morgan');
 const path = require('path');
 const helmet = require("helmet");
-const path = require('path');
 require('dotenv').config();
+
 
 const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
 
 
 const app = express();
-
 app.use(morgan('dev'));
 
 app.use((req, res, next) => {
@@ -18,6 +18,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
 
 app.use(express.json());
 app.use(helmet());
