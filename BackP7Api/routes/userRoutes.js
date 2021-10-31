@@ -7,12 +7,12 @@ const router = express.Router();
 // middleware pour mdp
 
 //Routes à créer
-router.post('/signup', );     // Créer un compte utilisateur
-router.post('/login', );      // Se connecter 
+router.post('/signup', );                 // Créer un compte utilisateur
+router.post('/login', );                  // Se connecter 
 router.put('/:id', auth, multer);         // Modifier : Nom, Prénom, Image de son compte
-router.delete('/:id', auth);      // Supprimer son compte
-router.get('/:id', auth);         // Voir le Profil d'un utilisatuer
-router.get('/', auth);            // Voir tout les utilisateurs
+router.delete('/:id', auth);              // Supprimer son compte
+router.get('/:id', auth);                 // Voir le Profil d'un utilisatuer
+router.get('/', auth);                    // Voir tout les utilisateurs
 
 
 module.exports = router;
