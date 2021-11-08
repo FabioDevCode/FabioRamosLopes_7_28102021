@@ -1,1 +1,0 @@
-// Page avec un unique post et les commentaires associés

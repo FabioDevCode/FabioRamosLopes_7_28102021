@@ -1,34 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+import Index from './views/Index'
+
 
 
 Vue.use(VueRouter);
 
 export default new VueRouter({
-    linkActiveClass: "is-active",
+    mode: 'history',
     routes: [
         {
             path: "/",
-            name: "Inex",
+            name: "Index",
             component: Index,
         },
-        {
-            path: "/Home",
-            name: "Home",
-            component: Home,
-        }
-
-
-
-
-
-
-
-
-
-
-
-
     ]
-});
+})

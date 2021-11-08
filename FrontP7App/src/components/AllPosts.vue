@@ -1,1 +1,0 @@
-// Bloc centrale affichant tout les posts
