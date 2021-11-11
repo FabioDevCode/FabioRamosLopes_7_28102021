@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Index from './views/Index'
+import Home from './views/Home'
+
 
 
 
@@ -15,5 +17,11 @@ export default new VueRouter({
             name: "Index",
             component: Index,
         },
+        {
+            path: "/home",
+            name: "Home",
+            component: Home,
+
+        }
     ]
 })

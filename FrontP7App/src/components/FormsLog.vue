@@ -3,7 +3,7 @@
        <div class="bloc-img">
            <img src="../assets/icon-rougeblanc.png" alt="Logo Groupomania">
        </div>
-       
+
         <div class="bloc-form">
             
             <form class="signup-form" id="signup">
@@ -48,6 +48,7 @@
 export default {
   name: 'Froms',
 }
+
 </script>
 
 
@@ -63,12 +64,13 @@ export default {
     height: max-content;
     width: max-content;
     margin: 0 auto;
-
+    height: 250px;
 }
 
 .bloc-img img {
     height: 250px;
     margin: 0 auto;
+    object-fit: contain;
 }
 
 .bloc-form {
@@ -93,6 +95,7 @@ export default {
     text-align: center;
     border-bottom: 2px solid #FD3E15;
     padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .bloc-form form {
@@ -106,14 +109,19 @@ export default {
     font-weight: bold;
     font-style: italic;
     margin-bottom: 5px;
-    margin-top: 20px;
+    margin-top: 25px;
+}
+
+.bloc-form form input {
+    height: 2em;
+    font-size: 1em;
 }
 
 .bloc-form form button {
     font-weight: bold;
     color: whitesmoke;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    margin-top: 25px;
+    margin-top: 35px;
     font-size: 1.2em;
     border: none;
     height: 50px;
@@ -125,6 +133,5 @@ export default {
 .bloc-form form button:active {
     box-shadow: 5px 5px 12px rgba(66, 47, 47, 0.2);
 }
-
 
 </style>
