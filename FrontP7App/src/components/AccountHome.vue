@@ -1,16 +1,14 @@
 <template>
-    <div class="home-columns">
-        <div class="profil-home">
-            <div class="bloc-img">
-                <img src="../assets/randomuser.jpg" alt="Utilisateur">
-            </div>
-            <div class="bloc-name">
-                <p class="prénom">Gérard</p>
-                <p class="nom">HUGUET</p>
-            </div>
-            <div class="button-profil">
-                Voir mon profil
-            </div>
+    <div class="profil-home">
+         <div class="bloc-img">
+            <img src="../assets/randomuser.jpg" alt="Utilisateur">
+        </div>
+        <div class="bloc-name">
+            <p class="prénom">Gérard</p>
+            <p class="nom">HUGUET</p>
+        </div>
+        <div class="button-profil">
+            Voir mon profil
         </div>
     </div>
 </template>
@@ -18,8 +16,9 @@
 
 
 <script>
+
 export default {
-  name: 'ProfilView',
+    name: 'ProfilView',
 }
 
 
@@ -28,29 +27,20 @@ export default {
 
 
 <style scoped>
-.home-columns {
-    z-index: 500;
-    position: fixed;
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-    padding: 120px 10vW 0 10vw;
-    width: 100%;
-}
 
 .profil-home {
-    position: fixed;
+    position: relative;
     border: 1px solid darkgrey;
-    width: 210px;
+    width: 300px;
     height: 300px;
     border-radius: 8px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     justify-content: space-evenly;
     background-color: white;
+    overflow: hidden;
     padding-bottom: 45px;
 }
 
@@ -77,9 +67,9 @@ export default {
 }
 
 .button-profil {
+    position: absolute;
     font-size: .95em;
     font-weight: 600;
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;

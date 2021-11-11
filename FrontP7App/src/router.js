@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Index from './views/Index'
+import Index2 from './views/Index2'
 import Home from './views/Home'
 
 
@@ -16,6 +17,11 @@ export default new VueRouter({
             path: "/",
             name: "Index",
             component: Index,
+        },
+        {
+            path: "/SignupForm",
+            name: "SignupForm",
+            component: Index2,
         },
         {
             path: "/home",

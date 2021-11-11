@@ -1,19 +1,19 @@
 <template>
   <div>
-    <LoginForm />
+    <SignupForm />
   </div>
 </template>
 
 
 
 <script>
-import LoginForm from '@/components/LoginForm.vue'
+import SignupForm from '@/components/SignupForm.vue'
 
 
 export default {
-  name: 'Index',
+  name: 'Index2',
   components: {
-    LoginForm,
+    SignupForm,
   }
 }
 </script>

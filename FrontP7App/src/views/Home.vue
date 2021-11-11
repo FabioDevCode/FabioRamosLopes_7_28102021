@@ -1,8 +1,9 @@
 <template>
   <div class="home">
     <TheHeader />
-    <ProfilView />
+    <Columns />
     <AllPosts />
+
   </div>
 </template>
 
@@ -10,15 +11,17 @@
 
 <script>
 import TheHeader from '@/components/TheHeader.vue'
-import ProfilView from '@/components/AccountHome.vue'
+// import ProfilView from '@/components/AccountHome.vue'
+// import UsersView from '@/components/UsersHome'
 import AllPosts from '@/components/AllPosts.vue'
+import Columns from '@/components/HomeColumns.vue'
 
 export default {
   name: 'Index',
   components: {
     TheHeader,
-    ProfilView,
-    AllPosts
+    AllPosts,
+    Columns
   }
 }
 </script>

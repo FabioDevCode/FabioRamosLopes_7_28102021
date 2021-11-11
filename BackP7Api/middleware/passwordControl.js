@@ -1,4 +1,4 @@
-const passwordSch = require('../models/password');
+const passwordSch = require('../models/passwordModel');
 
 module.exports = (req, res, next) => {
     if (!passwordSch.validate(req.body.password)) {

@@ -4,10 +4,18 @@
            <img src="../assets/icon-rougeblanc.png" alt="Logo Groupomania">
        </div>
 
-        <div class="bloc-form">
-            
-            <form class="signup-form" id="signup">
+       <nav>
+            <router-link class="lien" to="/SignupForm">S'inscrire</router-link>
+            <div class="nav-text">
+                <p>N</p>
+                <p>A</p>
+                <p>V</p>
+            </div>
+            <router-link class="lien" to="/">Se Connecter</router-link>
+       </nav>
 
+        <div class="bloc-form">
+            <form class="signup-form" id="signup">
                 <h3>INSCRIVEZ-VOUS</h3>
 
                 <label for="prenom">PRÉNOM</label>
@@ -25,20 +33,6 @@
                 <button>S'incrire</button>
             </form>
 
-            <div class="ou">OU</div>
-
-            <form class="login-form" id="login">
-                <h3>CONNECTEZ-VOUS</h3>
-
-                <label for="login-email">E-MAIL :</label>
-                <input type="email" id="login-email">
-
-                <label for="login-password">MOT DE PASSE :</label>
-                <input type="password" id="login-password">
-
-                <button>Se Connecter</button>
-            </form>
-
         </div>
     </div> 
 </template>
@@ -46,7 +40,7 @@
 
 <script>
 export default {
-  name: 'Froms',
+    name: 'SignupForm',
 }
 
 </script>
@@ -54,6 +48,39 @@ export default {
 
 
 <style scoped>
+nav {
+    margin: 0 auto;
+    width: 20%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 50px;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.nav-text {
+    font-weight: 600;
+    color: #FD3E15;
+}
+
+nav .lien {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    width: 48%;
+    text-decoration: none;
+    background: #FD3E15;
+    height: 100%;
+    
+}
+
+nav .lien
+
 .forms-log {
     width: 100vw;
     display: flex;
@@ -76,19 +103,6 @@ export default {
 .bloc-form {
     display: flex;
     justify-content: center;
-}
-
-.ou {
-    font-weight: Bold;
-    color: #FD3E15;
-    text-align: center;
-    line-height: 50px;
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    margin: 0 35px;
-    align-self: center;
-    border: 1px solid #FD3E15;
 }
 
 .bloc-form form h3 {
