@@ -5,7 +5,7 @@
        </div>
 
        <nav>
-            <router-link class="lien" to="/SignupForm">S'inscrire</router-link>
+            <router-link class="lien" to="/signup">S'inscrire</router-link>
             <div class="nav-text">
                 <p>N</p>
                 <p>A</p>
@@ -34,7 +34,7 @@
 
 <script>
 export default {
-    name: 'LoginForm',
+    name: 'Login',
 };
 
 </script>

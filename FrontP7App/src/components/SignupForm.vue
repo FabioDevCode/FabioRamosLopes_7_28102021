@@ -5,7 +5,7 @@
        </div>
 
        <nav>
-            <router-link class="lien" to="/SignupForm">S'inscrire</router-link>
+            <router-link class="lien" to="/signup">S'inscrire</router-link>
             <div class="nav-text">
                 <p>N</p>
                 <p>A</p>
@@ -15,22 +15,22 @@
        </nav>
 
         <div class="bloc-form">
-            <form class="signup-form" id="signup">
+            <form @submit.prevent class="signup-form" id="signup">
                 <h3>INSCRIVEZ-VOUS</h3>
 
-                <label for="prenom">PRÉNOM</label>
-                <input type="text" id="prenom">
+                <label for="firstname">PRÉNOM</label>
+                <input v-model="firstname" type="text" id="firstname">
 
-                <label for="nom">NOM</label>
-                <input type="text" id="nom">
+                <label for="lastname">NOM</label>
+                <input v-model="lastname" type="text" id="lastname">
 
-                <label for="signup-email">E-MAIL</label>
-                <input type="email" id="signup-email">
+                <label for="email">E-MAIL</label>
+                <input v-model="email" type="email" id="email">
 
-                <label for="signup-password">MOT DE PASSE</label>
-                <input type="password" id="signup-password">
+                <label for="password">MOT DE PASSE</label>
+                <input v-model="password" type="password" id="password">
 
-                <button>S'incrire</button>
+                <button @click="SubmitForm()">S'incrire</button>
             </form>
 
         </div>
@@ -40,9 +40,38 @@
 
 <script>
 export default {
-    name: 'SignupForm',
-}
+    name: 'Signup',
+    data() {
+        return {
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: '',
+        }
+    },
+    methods: {
+        SubmitForm() {
+            let FormSend = {
+                firstname: this.firstname,
+                lastname: this.lastname,
+                email: this.email,
+                password: this.password
+            }
 
+            fetch("http://localhost:3000/api/auth/signup",
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(FormSend)
+            })
+            .then(response => response.json())
+            .catch(error => console.log(error))
+        }
+    }
+};
 </script>
 
 

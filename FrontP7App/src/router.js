@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Index from './views/Index'
-import Index2 from './views/Index2'
+import IndexTwo from './views/IndexTwo'
 import Home from './views/Home'
 
 
@@ -15,17 +15,14 @@ export default new VueRouter({
     routes: [
         {
             path: "/",
-            name: "Index",
             component: Index,
         },
         {
-            path: "/SignupForm",
-            name: "SignupForm",
-            component: Index2,
+            path: "/signup",
+            component: IndexTwo,
         },
         {
             path: "/home",
-            name: "Home",
             component: Home,
 
         }
