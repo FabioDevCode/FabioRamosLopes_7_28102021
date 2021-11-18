@@ -5,26 +5,21 @@
        </div>
 
        <nav>
-            <router-link class="lien" to="/signup">S'inscrire</router-link>
-            <div class="nav-text">
-                <p>N</p>
-                <p>A</p>
-                <p>V</p>
-            </div>
-            <router-link class="lien" to="/">Se Connecter</router-link>
+            <router-link class="lien inscrire" to="/signup">S'inscrire</router-link>
+            <router-link class="lien connecter" to="/">Se Connecter</router-link>
        </nav>
 
         <div class="bloc-form">
-            <form class="login-form">
+            <form @submit.prevent class="login-form">
                 <h3>CONNECTEZ-VOUS</h3>
 
-                <label for="login-email">E-MAIL :</label>
-                <input type="email" id="login-email">
+                <label for="email">E-MAIL</label>
+                <input v-model="email" type="email" id="email">
 
-                <label for="login-password">MOT DE PASSE :</label>
-                <input type="password" id="login-password">
+                <label for="password">MOT DE PASSE</label>
+                <input v-model="password" type="password" id="password">
 
-                <button>Se Connecter</button>
+                <button @click="SubmitForm()">Se Connecter</button>
             </form>
 
         </div>
@@ -35,8 +30,35 @@
 <script>
 export default {
     name: 'Login',
-};
+    data() {
+        return {
+            email: '',
+            password: '',
+        }
+    },
+    methods: {
+        SubmitForm() {
+            let FormSend = {
+                email: this.email,
+                password: this.password
+            }
 
+            fetch("http://localhost:3000/api/auth/login",
+            {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(FormSend)
+            })
+            .then((response) => {
+                response.json()
+            })
+            .catch(error => console.log(error))
+        }
+    }
+};
 </script>
 
 
@@ -45,6 +67,7 @@ export default {
 nav {
     margin: 0 auto;
     width: 20%;
+    min-width: 310px;
     height: 50px;
     display: flex;
     justify-content: space-between;
@@ -55,25 +78,23 @@ nav {
     overflow: hidden;
 }
 
-.nav-text {
-    font-weight: 600;
-    color: #FD3E15;
-}
-
 nav .lien {
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 600;
-    width: 48%;
+    width: 50%;
     text-decoration: none;
     background: #FD3E15;
     height: 100%;
-    
 }
 
-nav .lien
+nav .connecter {
+    cursor: default;
+    background: whitesmoke;
+    color: grey;
+}
 
 .forms-log {
     width: 100vw;
@@ -109,6 +130,7 @@ nav .lien
 .bloc-form form {
     border-radius: 7px;
     width: 20%;
+    min-width: 310px;
     display: flex;
     flex-direction: column;
 }

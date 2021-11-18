@@ -9,7 +9,6 @@ const userRoutes = require('./routes/userRoutes');
 const postRoutes = require('./routes/postRoutes');
 
 
-
 const app = express();
 
 app.use(morgan('dev'));

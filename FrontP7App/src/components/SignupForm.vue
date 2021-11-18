@@ -5,13 +5,8 @@
        </div>
 
        <nav>
-            <router-link class="lien" to="/signup">S'inscrire</router-link>
-            <div class="nav-text">
-                <p>N</p>
-                <p>A</p>
-                <p>V</p>
-            </div>
-            <router-link class="lien" to="/">Se Connecter</router-link>
+            <router-link class="lien inscrire" to="/signup">S'inscrire</router-link>
+            <router-link class="lien connecter" to="/">Se Connecter</router-link>
        </nav>
 
         <div class="bloc-form">
@@ -80,6 +75,7 @@ export default {
 nav {
     margin: 0 auto;
     width: 20%;
+    min-width: 310px;
     height: 50px;
     display: flex;
     justify-content: space-between;
@@ -101,14 +97,17 @@ nav .lien {
     justify-content: center;
     align-items: center;
     font-weight: 600;
-    width: 48%;
+    width: 50%;
     text-decoration: none;
     background: #FD3E15;
     height: 100%;
-    
 }
 
-nav .lien
+nav .inscrire {
+    cursor: default;
+    background: whitesmoke;
+    color: grey;
+}
 
 .forms-log {
     width: 100vw;
@@ -144,6 +143,7 @@ nav .lien
 .bloc-form form {
     border-radius: 7px;
     width: 20%;
+    min-width: 310px;
     display: flex;
     flex-direction: column;
 }
