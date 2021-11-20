@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
+  <div class="profil">
     <TheHeader />
-    <AllPosts />
+    <UserAccount />
   </div>
 </template>
 
@@ -9,14 +9,14 @@
 
 <script>
 import TheHeader from '@/components/TheHeader.vue'
-import AllPosts from '@/components/AllPosts.vue'
+import UserAccount from '@/components/UserAccount.vue'
+
 
 export default {
-  name: 'Index',
+  name: 'Profil',
   components: {
     TheHeader,
-    AllPosts,
-    
+    UserAccount,
   }
 }
 </script>
@@ -24,7 +24,7 @@ export default {
 
 
 <style scoped>
-.home {
+.profil {
   background-color: whitesmoke;
 }
 

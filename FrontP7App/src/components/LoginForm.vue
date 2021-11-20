@@ -52,10 +52,14 @@ export default {
                 method: "POST",
                 body: JSON.stringify(FormSend)
             })
-            .then((response) => {
-                response.json()
+            .then(response => response.json())
+            .then(function(res) {
+                localStorage.setItem("user", JSON.stringify(res));
             })
-            .catch(error => console.log(error))
+            .then(() => {
+                this.$router.push('/home');
+            })
+            .catch((error) => console.log(error))
         }
     }
 };
