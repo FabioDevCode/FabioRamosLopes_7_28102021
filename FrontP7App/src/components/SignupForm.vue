@@ -64,7 +64,12 @@ export default {
             })
             .then(response => response.json())
             .catch(error => console.log(error))
-        }
+            //------------------------------------
+            setTimeout(200);
+            alert("Bienvenue ! Veuillez-vous connecter.")
+            window.location = "/"
+        },
+
     }
 };
 </script>

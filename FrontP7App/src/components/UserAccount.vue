@@ -2,37 +2,69 @@
     <div class="blocaccount">
         <div class="card">
             <div class="blocimg">
-                <form>
+                <form class="none">
                     <label for="avatar">Choisir une nouvelle pohto :</label>
                     <input type="file" accept="image/png, image/jpeg, image/jpg" id="avatar" name="avatar">
+                    <p>Format : .jpg, .jpeg ou .png</p>
                     <button>Envoyer</button>
                 </form>
-                <img src="../assets/randomuser.jpg" alt="photo de profil">
+                <img v-if="this.image" :src="this.image" alt="photo de profil">
+                <img v-else src="../assets/randomuser.jpg" alt="photo de profil random">
             </div>
             <div class="info">
-                <div class="firstname">Fabio</div>
-                <div class="lastname">TEST1</div>
+                <div class="firstname">{{ firstname }}</div>
+                <div class="lastname">{{ lastname }}</div>
             </div>
             <div class="option">
-                <button class="modif">Modifier ma pohto</button>
-                <button class="suppr">Supprimer mon profil</button>
-
+                <button v-if="toggletext == 0" @click="buttonModif()" class="modif">Modifer ma photo</button>
+                <button v-else-if="toggletext == 1" @click="buttonModif()" class="modif">Annuler la modification</button>
+                <button v-if="admin == 1 || userid >= 1" class="suppr">Supprimer mon profil</button>
             </div>
             <div class="statut">
-                <p>UTILISATEUR</p>    
+                <p v-if="this.admin == 0">UTILISATEUR</p>
+                <p v-if="this.admin == 1">ADMINISTRATEUR</p>    
             </div>
         </div>
     </div>
 </template>
 
 
-
 <script>
 export default {
-  name: 'UserAccount',
+    name: 'UserAccount',
+    data() {
+        return {
+            toggletext: '0',
+            token: '',
+            image: '',
+            firstname: '',
+            lastname: '',
+            admin: '',
+            userid: '',
+        }
+    },
+    mounted() {
+      this.getProfil();
+    },
+    methods: {
+        getProfil() {
+            this.firstname = JSON.parse(localStorage.user).firstname;
+            this.lastname = JSON.parse(localStorage.user).lastname;
+            this.admin = JSON.parse(localStorage.user).admin;
+            this.userid = JSON.parse(localStorage.user).userId;
+            this.token = JSON.parse(localStorage.user).token;
+        },
+        buttonModif() {
+            const form = document.querySelector('form');
+            form.classList.toggle('none');
+            if (this.toggletext == 0) {
+                this.toggletext = 1;
+            } else {
+                this.toggletext = 0;
+            }
+        },
+    }
 }
-
-
 </script>
 
 
@@ -61,7 +93,7 @@ export default {
     margin-top: 30px;
 }
 
-.blocimg, .blocimg img {
+.blocimg, .blocimg img, form {
     border-radius: 12px;
 }
 
@@ -78,30 +110,47 @@ export default {
     flex-wrap: nowrap;
 }
 
-form {
-    background: rgba(128, 128, 128, .8);
-    position: absolute;
+.none {
     display: none;
+}
+
+form {
+    background: rgba(50, 50, 50, .9);
+    position: absolute;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
 }
+
+form p {
+    font-weight: bold;
+    font-style: italic;
+    color: white;
+    font-size: .9em;
+}
+
+form input {
+    margin-bottom: 5px;
+}
+
 label {
     font-weight: bold;
-    
+    color: white;
+    font-size: 1.2em;
 }
-label, input {
+label, form p {
     margin-bottom: 25px;
 }
 form button {
+    font-weight: bold;
     cursor: pointer;
     border: none;
     width: 120px;
     height: 30px;
     border-radius: 9999px;
-
 }
 
 .blocimg img {
@@ -114,12 +163,13 @@ form button {
 
 .info {
     width: 100%;
+    word-break: break-all;
 }
 .firstname {
-    font-size: 2em;
+    font-size: 1.85em;
 }
 .lastname {
-    font-size: 3.5em;
+    font-size: 2em;
     font-weight: bold;
 }
 
@@ -140,12 +190,27 @@ form button {
     border: none;
     height: 50px;
     border-radius: 25px;
+    color: white;
+    
+}
+
+.modif {
+    background: midnightblue;
+}
+
+.suppr {
+    background: rgb(226, 55, 24);
+}
+
+.option button:active {
+    transform: scale(.95);
 }
 
 .statut {
     position: absolute;
     bottom: 0px;
-    background: rgba(253, 62, 21, .7);
+    color: white;
+    background: rgb(82, 82, 82);
     width: 100%;
     height: 60px;
     font-weight: bold;
@@ -202,16 +267,12 @@ form button {
 
     .blocimg {
         margin-top: 0;
+        margin-bottom: 25px;
         width: 100%;
         min-width: 310px;
     }
 
-    .firstname {
-        font-size: 1.5em;
-    }
-    .lastname {
-        font-size: 2em;
-    }
+
 
 }
 

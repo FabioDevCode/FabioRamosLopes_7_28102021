@@ -3,27 +3,36 @@
         <header>
             <img src="../assets/icon-blanc.png" alt="Logo Groupomania">
             <nav>
-                <div class="menu">
-                    <i class="fas fa-home"></i>
-                    <div class="text">Accueil</div>
-                </div>
-
-                <div class="menu">
-                    <i class="fas fa-user"></i>
-                    <div class="text">Profil</div>
-                </div>
-                <div class="menu">
-                    <i class="fas fa-plus-square"></i>
-                    <div class="text">Publier</div>
-                </div>
-                <div class="menu">
-                    <i class="fas fa-users"></i>
-                    <div class="text">Utilisateurs</div>
-                </div>
-                <div class="menu">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <div class="text">Déconnexion</div>
-                </div>
+                <router-link to="/home" class="link">
+                    <div class="menu">
+                        <i class="fas fa-home"></i>
+                        <div class="text">Accueil</div>
+                    </div>
+                </router-link>
+                <router-link to="/profil" class="link">
+                    <div class="menu">
+                        <i class="fas fa-user"></i>
+                        <div class="text">Profil</div>
+                    </div>
+                </router-link>
+                <router-link to="" class="link">
+                    <div class="menu">
+                        <i class="fas fa-plus-square"></i>
+                        <div class="text">Publier</div>
+                    </div>
+                </router-link>
+                <router-link to="/allusers" class="link">
+                    <div class="menu">
+                        <i class="fas fa-users"></i>
+                        <div class="text">Utilisateurs</div>
+                    </div>
+                </router-link>
+                <router-link to="/" class="link">
+                    <div @click="disconnect()" class="menu">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <div class="text">Déconnexion</div>
+                    </div>
+                </router-link>
             </nav>
         </header>
     </div>
@@ -33,9 +42,22 @@
 
 <script>
 export default {
-  name: 'TheHeader',
-}
+    name: 'TheHeader',
+    mounted() {
+    },
+    methods: {
+        disconnect() {
+            localStorage.removeItem("user");
+        },
+        verifStorage() {
+            if(!localStorage.getItem('user')) {
+                window.location = "/";
+            }
+        }
 
+
+    },
+}
 </script>
 
 
@@ -58,6 +80,7 @@ header {
     overflow: hidden;
     background: #FD3E15;
     width: 80%;
+    min-width: 320px;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -73,12 +96,15 @@ nav {
     color: white;
 }
 
-.menu {
+.link {
+    color: white;
+    text-decoration: none;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    text-align: center;
     margin-left: 10px;
     width: 100px;
     height: 60px;
@@ -87,13 +113,14 @@ nav {
     background-color: rgb(177, 39, 15);
 }
 
-.menu:active {
+.link:active {
     transform: scale(0.95);
     margin-top: 13px;
 }
 
 .menu i {
     font-size: 1.4em;
+    margin-bottom: 5px;
 }
 
 .text {
@@ -130,7 +157,7 @@ nav {
 }
 
 @media screen and (max-width: 768px) {
-    .menu {
+    .link {
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
@@ -141,7 +168,7 @@ nav {
         border-radius: 25px;
     }
 
-    .menu:active {
+    .link:active {
         margin-top: auto;
     }
 
@@ -151,6 +178,10 @@ nav {
 
     .text {
         display: none;
+    }
+
+    .menu i {
+        margin-bottom: 0px;
     }
 }
 
