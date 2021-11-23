@@ -11,7 +11,7 @@ const postRoutes = require('./routes/postRoutes');
 
 const app = express();
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 app.use(express.json());
 app.use(helmet());

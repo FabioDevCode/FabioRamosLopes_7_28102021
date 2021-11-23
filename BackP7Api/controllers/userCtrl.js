@@ -24,7 +24,7 @@ exports.signup = (req, res) => {
                 lastname: req.body.lastname,
                 email: emailCrypt,
                 password: hashedPassword,
-                avatar: '',
+                avatar: 'http://localhost:3000/images/randomuser.jpg',
                 admin: 0
             };
             User.create(newUser)
@@ -76,3 +76,7 @@ exports.getAllUsers = (req, res) => {
     .then((users) => res.status(200).json(users))
     .catch((error) => res.status(400).json(error))
 };
+
+exports.modifyUser = (req, res) => {
+
+}

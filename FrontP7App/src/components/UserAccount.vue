@@ -41,6 +41,7 @@ export default {
             lastname: '',
             admin: '',
             userid: '',
+            data: null,
         }
     },
     mounted() {
@@ -63,6 +64,9 @@ export default {
                 this.toggletext = 0;
             }
         },
+        modifyImage() {
+            // const formData = new FormData()
+        }
     }
 }
 </script>
@@ -87,31 +91,6 @@ export default {
     background: white;
     box-shadow: 0 0 15px 5px rgba(0, 0, 0, .3);
     display: flex;
-}
-
-.blocimg, .info, .option {
-    margin-top: 30px;
-}
-
-.blocimg, .blocimg img, form {
-    border-radius: 12px;
-}
-
-.blocimg {
-    position: relative;
-    height: 500px;
-    width: 500px;
-    margin-left: 30px;
-    margin-right: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-}
-
-.none {
-    display: none;
 }
 
 form {
@@ -153,16 +132,41 @@ form button {
     border-radius: 9999px;
 }
 
+.blocimg, .info, .option {
+    margin-top: 30px;
+}
+
+.blocimg, .blocimg img, form {
+    border-radius: 12px;
+}
+
+.blocimg {
+    position: relative;
+    height: 500px;
+    width: 500px;
+    margin-left: 30px;
+    margin-right: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.none {
+    display: none;
+}
+
 .blocimg img {
     object-fit: cover;
     object-position: center;
     height: 100%;
-    width: auto;
-    min-width: 100%;
+    width: 100%;
+    flex-wrap: nowrap;
 }
 
 .info {
-    width: 100%;
+    width: 50%;
     word-break: break-all;
 }
 .firstname {
