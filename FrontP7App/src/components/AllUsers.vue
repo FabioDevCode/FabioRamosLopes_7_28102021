@@ -62,11 +62,8 @@ export default {
                     blocUsers.appendChild(userCard);
                 }
             })
-            .catch(error => console.log(`Erreur : ${error}`));
-
-        
+            .catch(error => console.log(`Erreur : ${error}`))
         },
-
     },
 }
 </script>

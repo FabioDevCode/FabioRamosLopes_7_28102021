@@ -1,14 +1,15 @@
 <template>
     <div class="blocaccount">
         <div class="card">
-            <div class="blocimg">
-                <form class="none">
+            <div class="blocimgprofil">
+                <form @submit.prevent class="none">
                     <label for="avatar">Choisir une nouvelle pohto :</label>
-                    <input type="file" accept="image/png, image/jpeg, image/jpg" id="avatar" name="avatar">
+                    <input type="file" @change="onFileSelected" accept="image/png, image/jpeg, image/jpg" id="avatar" name="avatar">
                     <p>Format : .jpg, .jpeg ou .png</p>
-                    <button>Envoyer</button>
+                    <button @click="modifyImage()">Envoyer</button>
                 </form>
-                <img v-if="this.image" :src="this.image" alt="photo de profil">
+                <img v-if="this.url" :src="this.url" alt="photo do profil">
+                <img v-else-if="this.image" :src="this.image" alt="photo de profil">
                 <img v-else src="../assets/randomuser.jpg" alt="photo de profil random">
             </div>
             <div class="info">
@@ -30,6 +31,8 @@
 
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'UserAccount',
     data() {
@@ -41,7 +44,8 @@ export default {
             lastname: '',
             admin: '',
             userid: '',
-            data: null,
+            file: null,
+            url: null,
         }
     },
     mounted() {
@@ -53,6 +57,7 @@ export default {
             this.lastname = JSON.parse(localStorage.user).lastname;
             this.admin = JSON.parse(localStorage.user).admin;
             this.userid = JSON.parse(localStorage.user).userId;
+            this.image = JSON.parse(localStorage.user).avatar;
             this.token = JSON.parse(localStorage.user).token;
         },
         buttonModif() {
@@ -65,8 +70,28 @@ export default {
             }
         },
         modifyImage() {
-            // const formData = new FormData()
-        }
+            const fd = new FormData();
+            fd.append('image', this.file, this.file.name)
+
+            axios.put(`http://localhost:3000/api/auth/${this.userid}`, fd, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                }
+            })
+            .then(
+                
+            )
+ 
+        },
+        onFileSelected(event) {
+            this.file = event.target.files[0]
+            this.url = URL.createObjectURL(this.file);
+
+
+
+        },
     }
 }
 </script>
@@ -93,7 +118,11 @@ export default {
     display: flex;
 }
 
-form {
+.blocimgprofil form.none {
+    display: none;
+}
+
+.blocimgprofil form {
     background: rgba(50, 50, 50, .9);
     position: absolute;
     display: flex;
@@ -104,26 +133,26 @@ form {
     width: 100%;
 }
 
-form p {
+.blocimgprofil form p {
     font-weight: bold;
     font-style: italic;
     color: white;
     font-size: .9em;
 }
 
-form input {
+.blocimgprofil form input {
     margin-bottom: 5px;
 }
 
-label {
+.blocimgprofil label {
     font-weight: bold;
     color: white;
     font-size: 1.2em;
 }
-label, form p {
+.blocimgprofil label, form p {
     margin-bottom: 25px;
 }
-form button {
+.blocimgprofil form button {
     font-weight: bold;
     cursor: pointer;
     border: none;
@@ -132,15 +161,19 @@ form button {
     border-radius: 9999px;
 }
 
-.blocimg, .info, .option {
+.blocimgprofil form button:active {
+    transform: scale(.95);
+}
+
+.blocimgprofil, .info, .option {
     margin-top: 30px;
 }
 
-.blocimg, .blocimg img, form {
+.blocimgprofil, .blocimgprofil img, form {
     border-radius: 12px;
 }
 
-.blocimg {
+.blocimgprofil {
     position: relative;
     height: 500px;
     width: 500px;
@@ -151,13 +184,10 @@ form button {
     justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
+    min-width: 300px;
 }
 
-.none {
-    display: none;
-}
-
-.blocimg img {
+.blocimgprofil img {
     object-fit: cover;
     object-position: center;
     height: 100%;
@@ -225,7 +255,7 @@ form button {
 }
 
 @media screen and (max-width: 1200px) {
-    .blocimg {
+    .blocimgprofil {
         height: 300px;
         width: 300px;
     }
@@ -240,7 +270,7 @@ form button {
         align-items: center;
     }
 
-    .blocimg {
+    .blocimgprofil {
         margin-left: 0;
         margin-right: 0;
     }
@@ -264,12 +294,12 @@ form button {
 }
 
 @media screen and (max-width: 375px) {
-    .blocimg, .blocimg img {
+    .blocimgprofil, .blocimgprofil img {
         border-radius: 0;
         
     }
 
-    .blocimg {
+    .blocimgprofil {
         margin-top: 0;
         margin-bottom: 25px;
         width: 100%;

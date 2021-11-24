@@ -78,5 +78,22 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.modifyUser = (req, res) => {
-
-}
+    User.findOne({ where: {id: req.params.id} })
+    .then(user => {
+        if(user.avatar !== 'http://localhost:3000/images/randomuser.jpg') {
+            let img = user.avatar.split('/images/')[1];
+            fs.unlink("images/" + img, () => {
+                User.update({ avatar: req.protocol + '://' + req.get('host') + '/images/' + req.file.filename},
+                { where: { id: req.params.id } })
+                .then(() => res.status(201).json({ message: "Photo de profil modifiée" }))
+                .catch(error => res.status(404).json({ error }))
+            })
+        } else {
+            User.update({ avatar: req.protocol + '://' + req.get('host') + '/images/' + req.file.filename},
+            { where: { id: req.params.id } })
+            .then(() => res.status(201).json({ message: "Photo de profil modifiée" }))
+            .catch(error => res.status(404).json({ error }))
+        }
+    })
+    .catch((error) => res.status(500).json(error));
+};
