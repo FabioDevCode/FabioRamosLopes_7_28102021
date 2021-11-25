@@ -15,7 +15,7 @@
                         <div class="text">Profil</div>
                     </div>
                 </router-link>
-                <router-link to="" class="link">
+                <router-link to="/publish" class="link">
                     <div class="menu">
                         <i class="fas fa-plus-square"></i>
                         <div class="text">Publier</div>

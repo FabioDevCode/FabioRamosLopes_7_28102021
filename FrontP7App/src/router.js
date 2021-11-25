@@ -6,7 +6,7 @@ import IndexTwo from './views/IndexTwo';
 import Home from './views/Home';
 import Profil from './views/Profil';
 import Users from './views/Users';
-// import Publish - faire un post
+import Publish from './views/Publish';
 // import AllUsers - voir liste de tout les utilisateurs
 // import OnePost - Pour commenter le post
 
@@ -37,6 +37,10 @@ export default new VueRouter({
         {
             path: "/allusers",
             component: Users,
+        },
+        {
+            path: "/publish",
+            component: Publish,
         }
 
 
