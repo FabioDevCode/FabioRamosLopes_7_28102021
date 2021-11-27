@@ -8,7 +8,7 @@
                     <p>Format : .jpg, .jpeg ou .png</p>
                     <button @click="modifyImage()">Envoyer</button>
                 </form>
-                <img v-if="this.url" :src="this.url" alt="photo do profil">
+                <img v-if="this.url" :src="this.url" alt="photo de profil">
                 <img v-else-if="this.image" :src="this.image" alt="photo de profil">
                 <img v-else src="../assets/randomuser.jpg" alt="photo de profil random">
             </div>
@@ -19,7 +19,7 @@
             <div class="option">
                 <button v-if="toggletext == 0" @click="buttonModif()" class="modif">Modifer ma photo</button>
                 <button v-else-if="toggletext == 1" @click="buttonModif()" class="modif">Annuler la modification</button>
-                <button v-if="admin == 1 || userid >= 1" class="suppr">Supprimer mon profil</button>
+                <button v-if="admin == 1 || userid >= 1" @click="deleteUser(userid)" class="suppr">Supprimer mon profil</button>
             </div>
             <div class="statut">
                 <p v-if="this.admin == 0">UTILISATEUR</p>
@@ -80,17 +80,43 @@ export default {
                     'Authorization': `Bearer ${this.token}`
                 }
             })
-            .then(
-                
-            )
- 
+            .then((res) => {
+                localStorage.setItem("update", JSON.stringify(res.data));
+
+                let newUpProfil = {
+                    admin: JSON.parse(localStorage.user).admin,
+                    avatar: JSON.parse(localStorage.update).avatar,
+                    firstname: JSON.parse(localStorage.user).firstname,
+                    lastname: JSON.parse(localStorage.user).lastname,
+                    token: JSON.parse(localStorage.user).token,
+                    userId: JSON.parse(localStorage.user).userId,
+                };
+                localStorage.setItem("user", JSON.stringify(newUpProfil));
+                alert(`${JSON.parse(localStorage.update).message}`);
+                localStorage.removeItem("update");
+                this.buttonModif();
+            })
+            .catch(error => console.log({ error }));
+            
         },
         onFileSelected(event) {
             this.file = event.target.files[0]
             this.url = URL.createObjectURL(this.file);
-
-
-
+        },
+        deleteUser(userId) {
+            fetch(`http://localhost:3000/api/auth/${userId}`, 
+            {
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`,
+                },
+                method: "DELETE",
+            })
+            .then(() => {
+                alert("Votre compte à bien été supprimé.");
+                localStorage.removeItem('user');
+                window.location = '/';
+            })
         },
     }
 }

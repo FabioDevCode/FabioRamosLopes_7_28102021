@@ -80,18 +80,49 @@ exports.getAllUsers = (req, res) => {
 exports.modifyUser = (req, res) => {
     User.findOne({ where: {id: req.params.id} })
     .then(user => {
-        if(user.avatar !== 'http://localhost:3000/images/randomuser.jpg') {
+        if(user.avatar !== `${req.protocol}://${req.get('host')}/images/${req.file.filename}` && user.avatar !== 'http://localhost:3000/images/randomuser.jpg') {
             let img = user.avatar.split('/images/')[1];
             fs.unlink("images/" + img, () => {
                 User.update({ avatar: req.protocol + '://' + req.get('host') + '/images/' + req.file.filename},
                 { where: { id: req.params.id } })
-                .then(() => res.status(201).json({ message: "Photo de profil modifiée" }))
+                .then(() => {
+                    res.status(201).json({ 
+                        avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                        message: "Votre photo de profil à bien été modifiée",
+                    })
+                })
                 .catch(error => res.status(404).json({ error }))
             })
         } else {
             User.update({ avatar: req.protocol + '://' + req.get('host') + '/images/' + req.file.filename},
             { where: { id: req.params.id } })
-            .then(() => res.status(201).json({ message: "Photo de profil modifiée" }))
+            .then(() => {
+                res.status(201).json({ 
+                    avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                    message: "Votre photo de profil à bien été modifiée",
+                })
+            })
+            .catch(error => res.status(404).json({ error }))
+        }
+    })
+    .catch((error) => res.status(500).json(error));
+};
+
+exports.deleteUser = (req, res) => {
+    User.findOne ({ where: { id: req.params.id }})
+    .then(user => {
+        if (user.avatar != 'http://localhost:3000/images/randomuser.jpg') {
+            const filename = user.avatar.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+                User.destroy({ where: { id: req.params.id }})
+                .then(() => {
+                    res.status(200).json({ messagge: "Votre compte utilisateur à bien été supprimé." })
+                })
+                .catch(error => res.status(404).json({ error }))
+            })
+        } else {
+            User.destroy({ where: { id: req.params.id }})
+            .then(() => res.status(200).json({ messagge: "Votre compte utilisateur à bien été supprimé." }))
             .catch(error => res.status(404).json({ error }))
         }
     })

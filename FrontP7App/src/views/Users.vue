@@ -16,10 +16,9 @@ export default {
   components: {
     TheHeader,
     AllUsers,
-  }
+  },
 }
 </script>
-
 
 
 <style scoped>

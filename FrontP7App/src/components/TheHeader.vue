@@ -53,13 +53,12 @@ export default {
             if(!localStorage.getItem('user')) {
                 window.location = "/";
             }
-        }
+        },
 
 
     },
 }
 </script>
-
 
 
 <style scoped>
