@@ -7,7 +7,7 @@ const db = require('../models');
 const User = db.user;
 const Initial = db.sequelize;
 
-exports.signup = (req, res) => {
+exports.signup = (req, res, next) => {
     Initial.sync()
 
     const emailCrypt = cryptojs.HmacSHA256(req.body.email, `${process.env.CRPT_EMAIL}`).toString(cryptojs.enc.Base64);
@@ -39,7 +39,7 @@ exports.signup = (req, res) => {
     });
 };
 
-exports.login = (req, res) => {
+exports.login = (req, res, next) => {
 
     const emailCrypt = cryptojs.HmacSHA256(req.body.email, `${process.env.CRPT_EMAIL}`).toString(cryptojs.enc.Base64);
 
@@ -71,13 +71,13 @@ exports.login = (req, res) => {
     .catch(error => res.status(500).json({ error }))
 };
 
-exports.getAllUsers = (req, res) => {
+exports.getAllUsers = (req, res, next) => {
     User.findAll({attributes: ["id", "firstname", "lastname", "avatar"]})
     .then((users) => res.status(200).json(users))
     .catch((error) => res.status(400).json(error))
 };
 
-exports.modifyUser = (req, res) => {
+exports.modifyUser = (req, res, next) => {
     User.findOne({ where: {id: req.params.id} })
     .then(user => {
         if(user.avatar !== `${req.protocol}://${req.get('host')}/images/${req.file.filename}` && user.avatar !== 'http://localhost:3000/images/randomuser.jpg') {
@@ -108,7 +108,7 @@ exports.modifyUser = (req, res) => {
     .catch((error) => res.status(500).json(error));
 };
 
-exports.deleteUser = (req, res) => {
+exports.deleteUser = (req, res, next) => {
     User.findOne ({ where: { id: req.params.id }})
     .then(user => {
         if (user.avatar != 'http://localhost:3000/images/randomuser.jpg') {
@@ -127,4 +127,10 @@ exports.deleteUser = (req, res) => {
         }
     })
     .catch((error) => res.status(500).json(error));
+};
+
+exports.getAUser = (req, res, next) => {
+    User.findOne({ where: { id: req.params.id}})
+    .then((user) => res.status(200).json(user))
+    .catch((error) => res.status(400).json(error))
 };

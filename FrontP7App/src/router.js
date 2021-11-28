@@ -7,8 +7,7 @@ import Home from './views/Home';
 import Profil from './views/Profil';
 import Users from './views/Users';
 import Publish from './views/Publish';
-// import AllUsers - voir liste de tout les utilisateurs
-// import OnePost - Pour commenter le post
+import UserPage from './views/UserPage';
 
 
 
@@ -41,6 +40,10 @@ export default new VueRouter({
         {
             path: "/publish",
             component: Publish,
+        },
+        {
+            path: "/userpage",
+            component: UserPage,
         }
 
 

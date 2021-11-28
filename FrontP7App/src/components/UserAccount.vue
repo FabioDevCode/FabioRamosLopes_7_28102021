@@ -332,8 +332,6 @@ export default {
         min-width: 310px;
     }
 
-
-
 }
 
 </style>

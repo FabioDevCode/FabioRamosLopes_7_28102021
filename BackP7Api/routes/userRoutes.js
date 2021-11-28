@@ -8,12 +8,12 @@ const emailCtrl = require('../middleware/emailControl');
 const passwordCtrl = require('../middleware/passwordControl');
 
 
-router.post('/signup', emailCtrl, passwordCtrl, userCrtl.signup); // fait
-router.post('/login', userCrtl.login); // Fait
-router.put('/:id', auth, multer, userCrtl.modifyUser); // Fait
-router.delete('/:id', auth, userCrtl.deleteUser); // Supprimer son compte
-router.get('/:id', auth); // Voir le Profil d'un utilisatuer
-router.get('/', auth, userCrtl.getAllUsers); // Voir tout les utilisateurs
+router.post('/signup', emailCtrl, passwordCtrl, userCrtl.signup);
+router.post('/login', userCrtl.login);
+router.put('/:id', auth, multer, userCrtl.modifyUser);
+router.delete('/:id', auth, userCrtl.deleteUser);
+router.get('/:id', auth, userCrtl.getAUser);
+router.get('/', auth, userCrtl.getAllUsers);
 
 
 module.exports = router;

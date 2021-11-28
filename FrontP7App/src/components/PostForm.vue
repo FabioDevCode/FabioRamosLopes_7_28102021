@@ -17,20 +17,26 @@
 </template>
 
 
-
 <script>
 export default {
     name: 'Post',
+    data() {
+        return {
+
+        }
+    },
+    methods: {
+
+    }
 }
 
 </script>
 
 
-
 <style scoped>
 .blocpost {
     z-index: 900;
-    padding-top: 100px;
+    padding: 100px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,7 +48,8 @@ export default {
 .blocfrompost {
     overflow: hidden;
     background: white;
-    border: 2px solid black;
+    background: linear-gradient(180deg, #FD3E15 0%, rgba(255,250,255,1) 12%);
+    border: 1px solid black;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, .3);
     height: 80vh;
     min-height: 650px;
@@ -118,6 +125,10 @@ textarea {
 @media screen and (max-width: 1024px) {
     .blocpost {
         padding: 100px 0px;
+    }
+
+    .blocfrompost {
+        width: 85vw;
     }
 }
 

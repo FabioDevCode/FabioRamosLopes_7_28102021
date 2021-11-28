@@ -44,19 +44,26 @@ export default {
                     let userCard = document.createElement("div");
                     userCard.classList.add("cardusers");
                     userCard.innerHTML = `
-                    <div class="blocimg">
-                        <img src="${this.users[user].avatar}" alt="photo de profil">
-                    </div>
-                    <div class="info">
-                        <div class="firstname">${this.users[user].firstname}</div>
-                        <div class="lastname">${this.users[user].lastname}</div>
-                    </div>
+                    <a href="http://localhost:8080/userpage/?${this.users[user].id}">
+                        <div class="blocimg">
+                            <img src="${this.users[user].avatar}" alt="photo de profil">
+                        </div>
+                        <div class="info">
+                            <div class="firstname">${this.users[user].firstname}</div>
+                            <div class="lastname">${this.users[user].lastname}</div>
+                        </div>
+                    </a>
                     `;
 
                     blocUsers.appendChild(userCard);
                 }
             })
             .catch(error => console.log(`Erreur : ${error}`))
+        },
+
+        seeUserPage(id) {
+            window.location = `/userpage/?${id}`;
+            console.log(`/userpage/?${id}`)
         },
     },
 }
@@ -78,11 +85,6 @@ export default {
 
 .cardusers {
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    text-align: center;
     height: 240px;
     width: 160px;
     border-radius: 10px;
@@ -101,6 +103,18 @@ export default {
     transform: scale(.98);
 }
 
+.cardusers a {
+    text-decoration: none;
+    color: black;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
 .blocimg {
     background: white;
     overflow: hidden;
@@ -114,6 +128,10 @@ export default {
     width: 100%;
     object-position: center;
     object-fit: cover; 
+}
+
+.firstname, .lastname {
+    text-overflow: ellipsis;
 }
 
 .firstname {
@@ -150,7 +168,5 @@ export default {
     .firstname, .lastname {
         font-size: .9em;
     }
-
-} 
-
+}
 </style>
