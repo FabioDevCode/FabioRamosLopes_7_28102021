@@ -1,7 +1,7 @@
 <template>
-  <div class="post">
-        <TheHeader />
-        <Post />
+  <div class="publish">
+    <TheHeader />
+    <Post />
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
 
 
 <style scoped>
-.post {
+.publish {
   background-color: whitesmoke;
 }
 

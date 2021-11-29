@@ -1,11 +1,12 @@
 <template>
-    <div class="blocpost">
-        <div class="blocfrompost">
+    <div class="frompost">
+        <div class="thepost">
             <form @submit.prevent>
                 <h1>Publication</h1>
 
                 <label for="media">Choisir une image :</label>
                 <p class="formats">Formats : jpg, jpeg, png et gif</p>
+                
                 <div class="blocfromtop">
                     <input @change="UploadImg" type="file" accept="image/png, image/jpeg, image/jpg, image/gif" id="media" name="media">
                     <i v-if="this.url" class="fas fa-check-circle"></i>
@@ -128,18 +129,19 @@ export default {
 
 
 <style scoped>
-.blocpost {
+.frompost {
+    position: relative;
     z-index: 900;
     padding: 100px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    width: auto;
+    width: 100vw;
     min-height: 100vh;
 }
 
-.blocfrompost {
+.thepost {
     position: relative;
     overflow: hidden;
     background: white;
@@ -153,7 +155,7 @@ export default {
     border-radius: 20px;
 }
 
-.blocfrompost form {
+.thepost form {
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -163,20 +165,20 @@ export default {
     padding: 15px 0px;
 }
 
-.blocfrompost form h1 {
+.thepost form h1 {
     align-self: center;
     border-bottom: 2px solid black;
     margin-bottom: 4vh;
 }
 
-.blocfrompost form label {
+.thepost form label {
     font-weight: bold;
     font-size: 1.5em;
     margin-bottom: 1vh;
     word-break: break-word;
 }
 
-.blocfrompost .errors {
+.thepost .errors {
     text-align: center;
     font-weight: bold;
     color: red;
@@ -193,7 +195,7 @@ export default {
     margin-bottom: 3vh;
 }
 
-.blocfrompost form .blocfromtop input {
+.thepost form .blocfromtop input {
     margin: 0px;
 }
 
@@ -208,13 +210,13 @@ export default {
     margin-bottom: 1.5vh;
 }
 
-.blocfrompost form input {
+.thepost form input {
     margin-bottom: 3vh;
     word-break: break-all;
     overflow-wrap: break-word;
 }
 
-textarea {
+.thepost textarea {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1em;
     padding: 5px 10px;
@@ -223,7 +225,7 @@ textarea {
     border: 1px solid black;
 }
 
-.blocfrompost button {
+.thepost button {
     cursor: pointer;
     border: none;
     height: 50px;
@@ -238,17 +240,17 @@ textarea {
     margin-top: 10vh;
 }
 
-.blocfrompost button:active {
+.thepost button:active {
     transform: scale(.95);
     box-shadow: 0 0 3px 1px rgba(0, 0, 0, .3);
 }
 
 @media screen and (max-width: 1024px) {
-    .blocpost {
-        padding: 100px 0px;
+    .frompost {
+        padding: 50px 0px 100px 0px;
     }
 
-    .blocfrompost {
+    .thepost {
         width: 85vw;
     }
 }

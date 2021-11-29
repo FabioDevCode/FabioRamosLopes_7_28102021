@@ -1,55 +1,88 @@
 <template>
     <div class="allposts">
 
-        <div class="post">
-            <div class="bandeaupost">
-                <div class="bandeauuser">
-                    <img src="../assets/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
-                    <div>Beta</div>
-                    <div>TESTEUR</div>
-                </div>
-                <div class="bandeaubtn">
-                    <button class="modify" ><i class="fas fa-pen"></i></button>
-                    <button class="delete" ><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-            <div class="post-content">
-                <img src="https://cdn.pixabay.com/photo/2020/07/08/04/12/work-5382501_960_720.jpg" alt="image du travail">
-                <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga architecto saepe error similique nihil eligendi sed magnam labore, quisquam facilis recusandae dolorum, pariatur esse optio. Itaque dignissimos, voluptatibus quod inventore aliquid pariatur sint sapiente ex nulla quaerat accusamus. In, soluta quis ullam nemo consequatur a animi hic nihil ipsa voluptate.
-                </p>
-            </div>
-            <div class="button">COMMENTER</div>
-        </div>
-
-        <div class="post">
-            <div class="bandeaupost">
-                <div class="bandeauuser">
-                    <img src="../assets/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
-                    <div>Beta</div>
-                    <div>TESTEUR</div>
-                </div>
-                <div class="bandeaubtn">
-                    <button class="modify" ><i class="fas fa-pen"></i></button>
-                    <button class="delete" ><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </div>
-            <div class="post-content">
-                <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga architecto saepe error similique nihil eligendi sed magnam labore, quisquam facilis recusandae dolorum, pariatur esse optio. Itaque dignissimos, voluptatibus quod inventore aliquid pariatur sint sapiente ex nulla quaerat accusamus. In, soluta quis ullam nemo consequatur a animi hic nihil ipsa voluptate.
-                </p>
-            </div>
-            <div class="button">COMMENTER</div>
-        </div>
-
+        
     </div>
 </template>
 
 
 
 <script>
+
 export default {
-  name: 'AllPosts',
+    name: 'AllPosts',
+    data() {
+        return {
+            userId: '',
+            token: '',
+            posts: '',
+            users: '',
+
+        }
+    },
+    mounted() {
+        this.started();
+        this.getAllPosts();
+    },
+    methods: {
+        getAllPosts() {
+            
+            fetch(`http://localhost:3000/api/posts/`,
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`,
+                }
+            })
+            .then(response => response.json())
+            .then((response) => {
+
+                this.posts = response;
+                
+
+                const blocAllPosts = document.querySelector(".allposts");
+
+                for (let post in this.posts) {
+
+                    let postCard = document.createElement('div');
+                    postCard.classList.add("post");
+                    postCard.innerHTML = `
+                    <div class="bandeauAllposts">
+                        <div class="bandeauuser">
+                            <img src="http://localhost:3000/images/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
+                            <div class="blocname">
+                                <p>Beta <span>TESTEUR</span></p>
+                                <p class="datepost">${this.posts[post].date}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bandeaubtn">   
+                            <button v-if="this.userId == ${this.posts[post].userId}" class="modify" ><i class="fas fa-pen"></i></button>
+                            <button v-if="this.userId == ${this.posts[post].userId}" class="delete" ><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <img src="${this.posts[post].media}" alt="image du post">
+                        <p>
+                            ${this.posts[post].message}
+                        </p>
+                    </div>
+                    <div class="button">COMMENTER</div>
+                    `;
+                    console.log(this.posts[post].userId)
+                    blocAllPosts.appendChild(postCard);
+                }
+            })
+
+        },
+        started() {
+            this.token = JSON.parse(localStorage.user).token;
+            this.userId = JSON.parse(localStorage.user).userId;
+        }
+
+    }
+
 }
 
 
@@ -57,7 +90,7 @@ export default {
 
 
 
-<style scoped>
+<style>
 .allposts {
     z-index: 900;
     padding: 100px 0;
@@ -68,7 +101,7 @@ export default {
     width: auto;
 }
 
-.bandeaupost {
+.allposts .bandeauAllposts {
     height: 45px;
     margin-bottom: 10px;
     width: 100%;
@@ -123,6 +156,15 @@ export default {
 
 .bandeaubtn .delete {
     background: #FD3E15;
+}
+
+.blocname p span {
+    font-weight: bold;
+}
+
+.blocname .datepost {
+    color: rgb(46, 46, 46);
+    font-size: .8em;
 }
 
 .post {

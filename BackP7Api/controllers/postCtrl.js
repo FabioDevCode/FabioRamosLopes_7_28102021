@@ -17,3 +17,9 @@ exports.createPost = (req, res, next) => {
     .then(() => res.status(200).json({ message : "Nouvelle publication créée !"}))
     .catch((error) => res.status(400).json({ error }));
 }
+
+exports.getAllPosts = (req, res, next) => {
+    Post.findAll({order: [["id", "DESC"]]})
+    .then((posts) => res.status(200).json(posts))
+    .catch((error) => res.status(400).json(error))
+}

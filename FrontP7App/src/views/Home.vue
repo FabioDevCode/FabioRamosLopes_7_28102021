@@ -6,7 +6,6 @@
 </template>
 
 
-
 <script>
 import TheHeader from '@/components/TheHeader.vue'
 import AllPosts from '@/components/AllPosts.vue'
@@ -16,11 +15,9 @@ export default {
   components: {
     TheHeader,
     AllPosts,
-    
   }
 }
 </script>
-
 
 
 <style scoped>
