@@ -57,7 +57,7 @@ export default {
                 this.firstname = response.firstname;
                 this.lastname = response.lastname;
                 this.admin = response.admin;
-
+                
             })
         }
     }

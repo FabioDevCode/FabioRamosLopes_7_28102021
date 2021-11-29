@@ -3,13 +3,13 @@ const multer = require('../database/multerCondig');
 const auth = require('../middleware/authControl');
 const router = express.Router();
 
-// controller pour les posts
-// controller pour les commentaires
+const postCtrl = require('../controllers/postCtrl');
+// const cmntCtrl = require('../controllers/cmntCtrl');
 
 
 // Routes à créer pour les POSTS
 
-router.post('/', auth, multer);                     // Création d'un post
+router.post('/', auth, multer, postCtrl.createPost);// Création d'un post
 router.put('/:id', auth, multer);                   // Modifer un post
 router.delete('/:id', auth, multer);                // Supprimer un post
 router.get('/', auth);                              // Voir tous les posts (File d'actualité / Feed / etc)

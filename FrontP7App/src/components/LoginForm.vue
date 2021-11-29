@@ -21,7 +21,6 @@
 
                 <button @click="SubmitForm()">Se Connecter</button>
             </form>
-
         </div>
     </div> 
 </template>
@@ -80,6 +79,7 @@ nav {
     margin-bottom: 50px;
     border-radius: 999px;
     overflow: hidden;
+
 }
 
 nav .lien {
@@ -104,6 +104,7 @@ nav .connecter {
     width: 100vw;
     display: flex;
     flex-direction: column;
+    margin-bottom: 100px;
 }
 
 .bloc-img {

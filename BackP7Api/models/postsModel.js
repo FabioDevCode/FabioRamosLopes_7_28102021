@@ -24,29 +24,31 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING(250),
             allowNull: false
         },
-        createdAt: {
-            type: DataTypes.STRING(50),
+        date: {
+            type: DataTypes.STRING(250),
             allowNull: false
         }
     }, {
         sequelize,
         tableName: 'posts',
         timeStamp: false,
+        createdAt: 'created',
+        updatedAt: false,
         indexes: [
             {
-                name: "PRIMARY",
-                unique: true,
-                using: "BTREE",
-                fields: [
-                    { name: "id" },
-                ]
+              name: "PRIMARY",
+              unique: true,
+              using: "BTREE",
+              fields: [
+                { name: "id" },
+              ]
             },
             {
-                name: "fk_posts_userId",
-                using: "BTREE",
-                fields: [
-                    { name: "userId" },
-                ]
+              name: "fk_posts_userId",
+              using: "BTREE",
+              fields: [
+                { name: "userId" },
+              ]
             },
         ]
     });

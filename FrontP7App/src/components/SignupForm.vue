@@ -118,6 +118,7 @@ nav .inscrire {
     width: 100vw;
     display: flex;
     flex-direction: column;
+    margin-bottom: 100px;
 }
 
 .bloc-img {

@@ -60,11 +60,6 @@ export default {
             })
             .catch(error => console.log(`Erreur : ${error}`))
         },
-
-        seeUserPage(id) {
-            window.location = `/userpage/?${id}`;
-            console.log(`/userpage/?${id}`)
-        },
     },
 }
 </script>
