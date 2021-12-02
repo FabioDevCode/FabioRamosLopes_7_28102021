@@ -9,6 +9,9 @@
                 <div class="firstname">{{ firstname }}</div>
                 <div class="lastname">{{ lastname }}</div>
             </div>
+            <div class="option">
+                <button v-if="you == 1" class="suppr" @click="deleteUserAdmin(iduser)" >Supprimer le profil</button>
+            </div>
             <div class="statut">
                 <p v-if="this.admin == 0">UTILISATEUR</p>
                 <p v-if="this.admin == 1">ADMINISTRATEUR</p>
@@ -24,11 +27,14 @@ export default {
     name: 'UserUnique',
     data() {
         return {
+            you: '',
+            token: '',
+
             image: '',
             firstname: '',
             lastname: '',
             admin: '',
-            token: '',
+            iduser: '',
         }
     },
     mounted() {
@@ -36,6 +42,7 @@ export default {
     },
     methods: {
         getUser() {
+            this.you = JSON.parse(localStorage.user).admin;
             this.token = JSON.parse(localStorage.user).token;
 
             const urlWindow = window.location.search;
@@ -56,10 +63,26 @@ export default {
                     this.firstname = response.firstname;
                     this.lastname = response.lastname;
                     this.admin = response.admin;
-                    
+                    this.iduser = response.id
             })
 
+        },
+        deleteUserAdmin(id) {
+
+            fetch(`http://localhost:3000/api/auth/${id}`, 
+            {
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`,
+                },
+                method: "DELETE",
+            })
+            .then(() => {
+                alert("Ce compte utilisateur à bien été supprimé.");
+                window.location = '/allusers';
+            })
         }
+
     }
 }
 </script>
@@ -144,6 +167,31 @@ export default {
     text-align: center;
 }
 
+.option {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    margin: 30px 30px 0 0;
+    flex-wrap: nowrap;
+}
+
+.option button {
+    cursor: pointer;
+    width: 200px;
+    font-size: .85em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border: none;
+    height: 50px;
+    border-radius: 25px;
+    color: white;
+    background: rgb(226, 55, 24);
+}
+
+.option button:active {
+    transform: scale(.95);
+}
+
 @media screen and (max-width: 1200px) {
     .blocimgprofil {
         height: 300px;
@@ -173,6 +221,10 @@ export default {
         width: 100%;
         align-items: center;
         text-align: center;
+    }
+
+    .option {
+        margin: 65px 0 0 0;
     }
 }
 

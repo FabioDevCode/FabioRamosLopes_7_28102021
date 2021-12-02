@@ -9,12 +9,11 @@ const postCtrl = require('../controllers/postCtrl');
 
 // Routes à créer pour les POSTS
 
-router.post('/', auth, multer, postCtrl.createPost);// Création d'un post
-router.put('/:id', auth, multer);                   // Modifer un post
-router.delete('/:id', auth, multer, postCtrl.deletePost);                // Supprimer un post
-router.get('/', auth, postCtrl.getAllPosts);// Voir tous les posts (File d'actualité / Feed / etc)
-router.get('/:id', auth);                           // Voir un seul post en affichant les commantaires associés
-
+router.post('/', auth, multer, postCtrl.createPost);
+router.put('/:id', auth, multer, postCtrl.modifyPost);
+router.delete('/:id', auth, multer, postCtrl.deletePost);              
+router.get('/', auth, postCtrl.getAllPosts);
+router.get('/:id', auth, postCtrl.getOnePost);
 
 // Routes à créer pour les COMMENTAIRES
 

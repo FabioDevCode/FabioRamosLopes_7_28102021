@@ -1,125 +1,61 @@
 <template>
-    <div class="allposts">
-        <div :key="post.id" v-for="(post) in allposts" class="post">
+    <div class="apost">
+        <div class="post">
 
-            <div :key="user.id" v-for="user in allusers">
-                <div class="bandeauAllposts" v-if="post.userId == user.id">
-
-                    <div class="bandeauuser" >
-                        <img v-if="user.avatar" :src="user.avatar" alt="photo du profil de l'utilisatuer qui a écris la publication">
-                        <img v-else src="../assets/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
-                        <div class="blocname" v-if="post.userId == user.id">
-                            <p> {{ user.firstname }} <span> {{ user.lastname }} </span></p>
-                            <p class="datepost">{{ post.date }}</p>
-                        </div>
+            <div class="bandeauAllposts">
+                <div class="bandeauuser" >
+                    <img src="../assets/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
+                    <div class="blocname">
+                        <p> Beta <span> TESTEUR </span></p>
+                        <p class="datepost"> Date de publication</p>
                     </div>
-
-                    <div class="bandeaubtn" v-if="post.userId == userId || admin == 1" > 
-                        <button v-if="post.userId == userId" class="modify"><i class="fas fa-pen"></i></button>
-                        <button class="delete" @click="deleteAPost(post.id)"><i class="fas fa-trash-alt"></i></button>
-                    </div>
-
                 </div>
+
+                <div class="bandeaubtn"> 
+                    <button class="modify"><i class="fas fa-pen"></i></button>
+                    <button class="delete"><i class="fas fa-trash-alt"></i></button>
+                </div>
+
             </div>
 
             <div class="post-content">
-                <img v-if="post.media" :src="post.media" alt="image du post">
-                <img v-else src="" alt="image du post" id="none">
+                <img src="../assets/randomuser.jpg" alt="image du post">
                 <p>
-                    {{ post.message }}
+                    Message
                 </p>
             </div>
-            <div class="button">VOIR LES COMMENTAIRES</div>
+            <div>
+                liste des commentaires
+            </div>
 
         </div>
     </div>
+
+
 </template>
 
 
-
 <script>
-
 export default {
-    name: 'AllPosts',
+    name: 'APost',
     data() {
         return {
-            userId: '',
-            admin: '',
-            token: '',
-            users: '',
-            allposts: [],
-            allusers: [],
+
         }
     },
     mounted() {
-        this.started();
-        this.getAllPosts();
-        this.getAllUsers();
+
     },
     methods: {
-        started() {
-            this.token = JSON.parse(localStorage.user).token;
-            this.userId = JSON.parse(localStorage.user).userId;
-            this.admin = JSON.parse(localStorage.user).admin;
-        },
-        getAllPosts() {
-            
-            fetch(`http://localhost:3000/api/posts/`,
-            {
-                headers: 
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`,
-                }
-            })
-            .then(response => response.json())
-            .then((response) => {
-
-                this.allposts = response;
-            })
-
-        },
-        getAllUsers() {
-            fetch(`http://localhost:3000/api/auth/`,
-            {
-                headers: 
-                {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`,
-                }
-            })
-            .then(response => response.json())
-            .then((response) => {
-
-                this.allusers = response;
-            })
-
-        },
-        deleteAPost(idPost) {
-            fetch(`http://localhost:3000/api/posts/${idPost}`, 
-            {
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.token}`,
-                },
-                method: "DELETE",
-            })
-            .then(() => {
-                alert("La publication a bien été supprimée.");
-                window.location = "/home";
-            })
-        }
 
     }
-
 }
-
 </script>
 
 
 
-<style>
-.allposts {
+<style scoped>
+.apost {
     z-index: 900;
     padding: 100px 0;
     display: flex;
@@ -130,7 +66,7 @@ export default {
     min-height: 100vh;
 }
 
-.allposts .bandeauAllposts {
+.apost .bandeauAllposts {
     height: 45px;
     margin-bottom: 10px;
     width: 100%;
@@ -263,7 +199,7 @@ export default {
 }
 
 @media screen and (max-width: 1024px) {
-    .allposts {
+    .apost {
         padding: 50px 0 100px 0;
     }
 
@@ -318,5 +254,6 @@ export default {
         width: calc(100px + 4.6vw);
     }
 }
+
 
 </style>

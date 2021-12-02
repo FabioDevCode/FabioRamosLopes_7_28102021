@@ -8,7 +8,7 @@ import Profil from './views/Profil';
 import Users from './views/Users';
 import Publish from './views/Publish';
 import UserPage from './views/UserPage';
-
+import OnePost from './views/OnePost';
 
 
 Vue.use(VueRouter);
@@ -44,8 +44,11 @@ export default new VueRouter({
         {
             path: "/userpage",
             component: UserPage,
-        }
-
+        },
+        {
+            path: "/post",
+            component: OnePost,
+        },
 
     ]
 })
