@@ -287,8 +287,12 @@ export default {
     }
 } 
 
-
 @media screen and (max-width: 1024px) {
+    .blocaccount {
+        padding: 50px 0 100px 0;
+    }
+
+
     .card {
         width: 90%;
         min-width: 310px;

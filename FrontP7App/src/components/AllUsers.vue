@@ -1,6 +1,27 @@
 <template>
     <div class="blocusers">
-        
+
+        <div :key="user.id" class="cardusers" v-for="user in allusers">
+            <a v-if="user.id == userId" href="/profil">
+                <div class="blocimg">
+                    <img :src="user.avatar" alt="photo de profil">
+                </div>
+                <div class="info">
+                    <div class="firstname">{{ user.firstname }}</div>
+                    <div class="lastname">{{ user.lastname }}</div>
+                </div>
+            </a>
+            <a v-else :href="url + user.id">
+                <div class="blocimg">
+                    <img :src="user.avatar" alt="photo de profil">
+                </div>
+                <div class="info">
+                    <div class="firstname">{{ user.firstname }}</div>
+                    <div class="lastname">{{ user.lastname }}</div>
+                </div>
+            </a>
+        </div>
+
     </div>
 </template>
 
@@ -13,7 +34,8 @@ export default {
         return {
             userId: '',
             token: '',
-            users: '',
+            url: 'http://localhost:8080/userpage/?',
+            allusers: [],
         }
     },
     mounted() {
@@ -35,30 +57,8 @@ export default {
             .then(response => response.json())
             .then((response) => {
 
-                this.users = response;
-
-                const blocUsers = document.querySelector('.blocusers');
-
-                for (let user in this.users) {
-
-                    let userCard = document.createElement("div");
-                    userCard.classList.add("cardusers");
-                    userCard.innerHTML = `
-                    <a href="http://localhost:8080/userpage/?${this.users[user].id}">
-                        <div class="blocimg">
-                            <img src="${this.users[user].avatar}" alt="photo de profil">
-                        </div>
-                        <div class="info">
-                            <div class="firstname">${this.users[user].firstname}</div>
-                            <div class="lastname">${this.users[user].lastname}</div>
-                        </div>
-                    </a>
-                    `;
-
-                    blocUsers.appendChild(userCard);
-                }
+                this.allusers = response;
             })
-            .catch(error => console.log(`Erreur : ${error}`))
         },
     },
 }
@@ -70,7 +70,7 @@ export default {
 <style>
 .blocusers {
     display: flex;
-    padding-top: 100px;
+    padding: 100px 0;
     width: 80%;
     margin: 0 auto;
     height: auto;
@@ -138,9 +138,10 @@ export default {
 }
 
 @media screen and (max-width: 1024px) {
+    
     .blocusers {
         justify-content: center;
-        padding: 100px 0;
+        padding: 50px 0 100px 0;
         width: 98%;
     }
 }

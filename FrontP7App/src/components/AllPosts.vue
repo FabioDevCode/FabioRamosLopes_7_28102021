@@ -1,7 +1,37 @@
 <template>
     <div class="allposts">
+        <div :key="post.id" v-for="(post) in allposts" class="post">
 
-        
+            <div :key="user.id" v-for="user in allusers">
+                <div class="bandeauAllposts" v-if="post.userId == user.id">
+
+                    <div class="bandeauuser" >
+                        <img v-if="user.avatar" :src="user.avatar" alt="photo du profil de l'utilisatuer qui a écris la publication">
+                        <img v-else src="../assets/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
+                        <div class="blocname" v-if="post.userId == user.id">
+                            <p> {{ user.firstname }} <span> {{ user.lastname }} </span></p>
+                            <p class="datepost">Fait le {{ post.date }}</p>
+                        </div>
+                    </div>
+
+                    <div class="bandeaubtn" v-if="post.userId == userId || admin == 1" > 
+                        <button v-if="post.userId == userId" class="modify" ><i class="fas fa-pen"></i></button>
+                        <button class="delete" ><i class="fas fa-trash-alt"></i></button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="post-content">
+                <img :src="post.media" alt="image du post">
+                <p>
+                    {{ post.message }}
+                </p>
+            </div>
+            <div class="button">COMMENTER</div>
+
+        </div>
+  
     </div>
 </template>
 
@@ -14,15 +44,17 @@ export default {
     data() {
         return {
             userId: '',
+            admin: '',
             token: '',
-            posts: '',
             users: '',
-
+            allposts: [],
+            allusers: [],
         }
     },
     mounted() {
         this.started();
         this.getAllPosts();
+        this.getAllUsers();
     },
     methods: {
         getAllPosts() {
@@ -38,47 +70,30 @@ export default {
             .then(response => response.json())
             .then((response) => {
 
-                this.posts = response;
-                
+                this.allposts = response;
+            })
 
-                const blocAllPosts = document.querySelector(".allposts");
-
-                for (let post in this.posts) {
-
-                    let postCard = document.createElement('div');
-                    postCard.classList.add("post");
-                    postCard.innerHTML = `
-                    <div class="bandeauAllposts">
-                        <div class="bandeauuser">
-                            <img src="http://localhost:3000/images/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
-                            <div class="blocname">
-                                <p>Beta <span>TESTEUR</span></p>
-                                <p class="datepost">${this.posts[post].date}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="bandeaubtn">   
-                            <button v-if="this.userId == ${this.posts[post].userId}" class="modify" ><i class="fas fa-pen"></i></button>
-                            <button v-if="this.userId == ${this.posts[post].userId}" class="delete" ><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        <img src="${this.posts[post].media}" alt="image du post">
-                        <p>
-                            ${this.posts[post].message}
-                        </p>
-                    </div>
-                    <div class="button">COMMENTER</div>
-                    `;
-                    console.log(this.posts[post].userId)
-                    blocAllPosts.appendChild(postCard);
+        },
+        getAllUsers() {
+            fetch(`http://localhost:3000/api/auth/`,
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`,
                 }
+            })
+            .then(response => response.json())
+            .then((response) => {
+
+                this.allusers = response;
             })
 
         },
         started() {
             this.token = JSON.parse(localStorage.user).token;
             this.userId = JSON.parse(localStorage.user).userId;
+            this.admin = JSON.parse(localStorage.user).admin;
         }
 
     }
@@ -171,10 +186,11 @@ export default {
     padding: 20px 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     overflow: hidden;
     height: auto;
-    width: 800px;
+    width: 70vw;
+    min-width: 900px;
     margin-bottom: 15px;
     border-radius: 15px;
     background-color: white;
@@ -182,15 +198,21 @@ export default {
 }
 
 .post-content {
+    display: flex;
     height: auto;
     width: 100%;
 }
 
 .post-content img {
+    object-fit: cover;
+    object-position: center;
     border-radius: 8px;
     margin-bottom: 10px;
-    width: 100%;
+    width: 60%;
+    min-width: 60%;
+    max-width: 60%;
     height: auto;
+    margin-right: 10px;
 }
 
 .post-content p {
@@ -214,6 +236,61 @@ export default {
 
 .button:active {
     transform: scale(.98);
+}
+
+@media screen and (max-width: 1024px) {
+    .allposts {
+        padding: 50px 0 100px 0;
+    }
+
+    .post {
+        width: 95vw;
+        min-width: 310px;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .post-content {
+        flex-direction: column;
+    }
+
+    .post-content img {
+        width: 100%;
+        max-width: none;
+        margin-right: 0px;
+    }
+
+}
+
+@media screen and (max-width: 425px) {
+    .blocname {
+        width: calc(100px + 15vw);
+        min-width: 115px;
+        overflow: hidden;
+        font-size: .9em;
+    }
+
+    .post-content p {
+        font-size: .9em;
+    }
+
+    .bandeaubtn {
+        padding: 0px;
+    }
+
+    .blocname p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+}
+
+@media screen and (max-width: 375px) {
+    .blocname {
+        width: calc(100px + 4.6vw);
+    }
 }
 
 </style>

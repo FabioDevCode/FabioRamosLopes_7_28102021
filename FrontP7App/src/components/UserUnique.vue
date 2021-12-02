@@ -28,7 +28,6 @@ export default {
             firstname: '',
             lastname: '',
             admin: '',
-
             token: '',
         }
     },
@@ -43,22 +42,23 @@ export default {
             let idUser = urlWindow.slice(1);
 
             fetch(`http://localhost:3000/api/auth/${idUser}`,
-            {
-                headers: 
                 {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.token}`,
-                }
-            })
+                    headers: 
+                    {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.token}`,
+                    }
+                })
             .then(response => response.json())
             .then((response) => {
 
-                this.image = response.avatar;
-                this.firstname = response.firstname;
-                this.lastname = response.lastname;
-                this.admin = response.admin;
-                
+                    this.image = response.avatar;
+                    this.firstname = response.firstname;
+                    this.lastname = response.lastname;
+                    this.admin = response.admin;
+                    
             })
+
         }
     }
 }
@@ -152,6 +152,10 @@ export default {
 } 
 
 @media screen and (max-width: 1024px) {
+    .blocuserpage {
+        padding: 50px 0 100px 0;
+    }
+    
     .card {
         width: 90%;
         min-width: 310px;
