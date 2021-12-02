@@ -57,31 +57,58 @@ export default {
                 });
                 this.createdAt = createdAt;
 
-                const fd = new FormData();
-                fd.append("userId", this.userid)
-                fd.append("message", this.message)
-                fd.append("image", this.file, this.file.name)
-                fd.append("date", this.createdAt)
+                if(this.file == undefined) {
 
-                axios.post('http://localhost:3000/api/posts', fd, {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.token}`
-                    }
-                })
-                .then((res) => {
-                    if(res.status === 200) {
-                        alert("Votre publication à bien été créée !")
-                        this.userid = '',
-                        this.message = '',
-                        this.image = null,
+                    const fd = new FormData()
 
-                        window.location = "/home";
-                    }
-                })
-                .catch(error => console.log(error))
+                    fd.append("userId", this.userid)
+                    fd.append("message", this.message)
+                    fd.append("date", this.createdAt)
 
+                    axios.post('http://localhost:3000/api/posts', fd, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    })
+                    .then((res) => {
+                        if(res.status === 200) {
+                            alert("Votre publication à bien été créée !")
+                            this.userid = '',
+                            this.message = '',
+                            this.image = null,
+                            window.location = "/home";
+                        }
+                    })
+                    .catch(error => console.log(error))
+                    
+                } else {
+                    const fd = new FormData()
+
+                    fd.append("userId", this.userid)
+                    fd.append("message", this.message)
+                    fd.append("image", this.file, this.file.name)
+                    fd.append("date", this.createdAt)
+
+                    axios.post('http://localhost:3000/api/posts', fd, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${this.token}`
+                        }
+                    })
+                    .then((res) => {
+                        if(res.status === 200) {
+                            alert("Votre publication à bien été créée !")
+                            this.userid = '',
+                            this.message = '',
+                            this.image = null,
+                            window.location = "/home";
+                        }
+                    })
+                    .catch(error => console.log(error))
+                }
             }
         },
         VerifPost() {
@@ -112,9 +139,9 @@ export default {
         UploadImg(event) {
             
             if(!event.target.files[0]) {
-                this.url = null;
-                this.image = null;
-                this.file = null;            
+                this.url = undefined;
+                this.image = undefined;
+                this.file = undefined;            
             } else {
                 this.image = event.target.files[0];
                 this.file = event.target.files[0];

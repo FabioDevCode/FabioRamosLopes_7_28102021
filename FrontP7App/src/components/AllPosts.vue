@@ -10,20 +10,21 @@
                         <img v-else src="../assets/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
                         <div class="blocname" v-if="post.userId == user.id">
                             <p> {{ user.firstname }} <span> {{ user.lastname }} </span></p>
-                            <p class="datepost">Fait le {{ post.date }}</p>
+                            <p class="datepost">{{ post.date }}</p>
                         </div>
                     </div>
 
                     <div class="bandeaubtn" v-if="post.userId == userId || admin == 1" > 
                         <button v-if="post.userId == userId" class="modify" ><i class="fas fa-pen"></i></button>
-                        <button class="delete" ><i class="fas fa-trash-alt"></i></button>
+                        <button class="delete" @click="deleteAPost(post.id)" ><i class="fas fa-trash-alt"></i></button>
                     </div>
 
                 </div>
             </div>
 
             <div class="post-content">
-                <img :src="post.media" alt="image du post">
+                <img v-if="post.media" :src="post.media" alt="image du post">
+                <img v-else src="" alt="image du post" id="none">
                 <p>
                     {{ post.message }}
                 </p>
@@ -57,6 +58,11 @@ export default {
         this.getAllUsers();
     },
     methods: {
+        started() {
+            this.token = JSON.parse(localStorage.user).token;
+            this.userId = JSON.parse(localStorage.user).userId;
+            this.admin = JSON.parse(localStorage.user).admin;
+        },
         getAllPosts() {
             
             fetch(`http://localhost:3000/api/posts/`,
@@ -90,16 +96,24 @@ export default {
             })
 
         },
-        started() {
-            this.token = JSON.parse(localStorage.user).token;
-            this.userId = JSON.parse(localStorage.user).userId;
-            this.admin = JSON.parse(localStorage.user).admin;
+        deleteAPost(idPost) {
+            fetch(`http://localhost:3000/api/posts/${idPost}`, 
+            {
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`,
+                },
+                method: "DELETE",
+            })
+            .then(() => {
+                alert("La publication a bien été supprimée.");
+                window.location = "/home";
+            })
         }
 
     }
 
 }
-
 
 </script>
 
@@ -114,6 +128,7 @@ export default {
     align-items: center;
     overflow: hidden;
     width: auto;
+    min-height: 100vh;
 }
 
 .allposts .bandeauAllposts {
@@ -203,6 +218,10 @@ export default {
     width: 100%;
 }
 
+.post-content #none {
+    display: none;
+}
+
 .post-content img {
     object-fit: cover;
     object-position: center;
@@ -212,7 +231,8 @@ export default {
     min-width: 60%;
     max-width: 60%;
     height: auto;
-    margin-right: 10px;
+    margin-right: 15px;
+    box-shadow: 5px 0px 8px rgba(0, 0, 0, .3);
 }
 
 .post-content p {
@@ -259,6 +279,8 @@ export default {
         width: 100%;
         max-width: none;
         margin-right: 0px;
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, .1);
     }
 
 }

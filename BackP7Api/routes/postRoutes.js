@@ -11,7 +11,7 @@ const postCtrl = require('../controllers/postCtrl');
 
 router.post('/', auth, multer, postCtrl.createPost);// Création d'un post
 router.put('/:id', auth, multer);                   // Modifer un post
-router.delete('/:id', auth, multer);                // Supprimer un post
+router.delete('/:id', auth, multer, postCtrl.deletePost);                // Supprimer un post
 router.get('/', auth, postCtrl.getAllPosts);// Voir tous les posts (File d'actualité / Feed / etc)
 router.get('/:id', auth);                           // Voir un seul post en affichant les commantaires associés
 
