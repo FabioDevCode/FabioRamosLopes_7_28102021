@@ -29,7 +29,7 @@
                     {{ post.message }}
                 </p>
             </div>
-            <div class="button">VOIR LES COMMENTAIRES</div>
+            <div class="button"><a :href="url2 + post.id">VOIR LES COMMENTAIRES</a></div>
 
         </div>
     </div>
@@ -51,6 +51,7 @@ export default {
             allposts: [],
             allusers: [],
             url: 'http://localhost:8080/post/?',
+            url2: 'http://localhost:8080/postwithcomments/?',
         }
     },
     mounted() {

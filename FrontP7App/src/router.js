@@ -9,6 +9,7 @@ import Users from './views/Users';
 import Publish from './views/Publish';
 import UserPage from './views/UserPage';
 import OnePost from './views/OnePost';
+import PostnCmnts from './views/PostnCmnts';
 
 
 Vue.use(VueRouter);
@@ -48,6 +49,10 @@ export default new VueRouter({
         {
             path: "/post",
             component: OnePost,
+        },
+        {
+            path: "/postwithcomments",
+            component: PostnCmnts,
         },
 
     ]

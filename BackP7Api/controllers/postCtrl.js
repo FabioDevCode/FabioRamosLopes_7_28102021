@@ -63,13 +63,11 @@ exports.modifyPost = (req, res, next) => {
         if(req.file) {
             fs.unlink("images/"+ image, () => {
                 Post.update({ ...postObj, id: req.params.id}, { where: { id: req.params.id}})
-
                 .then(() => res.status(200).json({ message: "La publication a bien été modifée."}))
                 .catch((error) => res.status(400).json(error))
             })
         } else {
             Post.update({ ...postObj, id: req.params.id}, { where: { id: req.params.id}})
-
             .then(() => res.status(200).json({ message: "La publication a bien été modifée."}))
             .catch((error) => res.status(400).json(error))
         }

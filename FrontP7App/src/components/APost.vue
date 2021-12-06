@@ -39,7 +39,7 @@
                 <p> {{ message }} </p>
             </div>
 
-            <button @click="ModifyPost()" >Publier</button>
+            <button @click="ModifyPost()" >Valider</button>
         </div>
     </div>
 
@@ -395,7 +395,6 @@ button {
     display: flex;
     height: auto;
     width: 100%;
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);
 }
 
 .post-content #none {
