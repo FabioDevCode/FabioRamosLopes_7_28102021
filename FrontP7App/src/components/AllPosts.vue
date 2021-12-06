@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="bandeaubtn" v-if="post.userId == userId || admin == 1" > 
-                        <button v-if="post.userId == userId" class="modify"><i class="fas fa-pen"></i></button>
+                        <button v-if="post.userId == userId" class="modify"><a :href="url + post.id"> <i class="fas fa-pen"></i> </a></button>
                         <button class="delete" @click="deleteAPost(post.id)"><i class="fas fa-trash-alt"></i></button>
                     </div>
 
@@ -43,12 +43,14 @@ export default {
     name: 'AllPosts',
     data() {
         return {
+            toggletext: false,
             userId: '',
             admin: '',
             token: '',
             users: '',
             allposts: [],
             allusers: [],
+            url: 'http://localhost:8080/post/?',
         }
     },
     mounted() {
@@ -108,6 +110,26 @@ export default {
                 alert("La publication a bien été supprimée.");
                 window.location = "/home";
             })
+        },
+        buttonModif() {
+            const form = document.querySelector('form');
+            form.classList.toggle('none');
+            if (this.toggletext == false) {
+                this.toggletext = true;
+            } else {
+                this.toggletext = false;
+            }
+
+            if(this.togglebtn == true) {
+                this.togglebtn = false;
+            } else {
+                this.togglebtn = true;
+            }
+
+        },
+        goToPost() {
+
+
         }
 
     }
@@ -130,6 +152,11 @@ export default {
     min-height: 100vh;
 }
 
+a {
+    color: white;
+    text-decoration: none;
+}
+
 .allposts .bandeauAllposts {
     height: 45px;
     margin-bottom: 10px;
@@ -138,10 +165,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
-}
-
-.post-content form.noneformpost {
-    display: none;
 }
 
 .bandeauuser, .bandeaubtn {
@@ -217,8 +240,11 @@ export default {
 
 .post-content {
     position: relative;
+    border-radius: 8px;
+    margin-top: 8px;
+    margin-bottom: 35px;
+    position: relative;
     display: flex;
-    height: auto;
     width: 100%;
 }
 
@@ -230,7 +256,6 @@ export default {
     object-fit: cover;
     object-position: center;
     border-radius: 8px;
-    margin-bottom: 10px;
     width: 60%;
     min-width: 60%;
     max-width: 60%;
@@ -240,8 +265,8 @@ export default {
 }
 
 .post-content p {
+    text-align: justify;
     z-index: 100;
-    margin-bottom: 10px;
 }
 
 .button {
@@ -277,12 +302,14 @@ export default {
 @media screen and (max-width: 768px) {
     .post-content {
         flex-direction: column;
+        margin-top: 6px;
     }
 
     .post-content img {
         width: 100%;
         max-width: none;
         margin-right: 0px;
+        margin-bottom: 12px;
         box-shadow: none;
         border: 1px solid rgba(0, 0, 0, .1);
     }

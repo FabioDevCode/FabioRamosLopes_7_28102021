@@ -59,11 +59,12 @@ export default {
             .then(response => response.json())
             .then((response) => {
 
-                    this.image = response.avatar;
-                    this.firstname = response.firstname;
-                    this.lastname = response.lastname;
-                    this.admin = response.admin;
-                    this.iduser = response.id
+                this.image = response.avatar;
+                this.firstname = response.firstname;
+                this.lastname = response.lastname;
+                this.admin = response.admin;
+                this.iduser = response.id;
+                
             })
 
         },

@@ -178,7 +178,7 @@ export default {
     height: 80vh;
     min-height: 650px;
     min-width: 315px;
-    width: 65vw;
+    width: 70vw;
     border-radius: 20px;
 }
 

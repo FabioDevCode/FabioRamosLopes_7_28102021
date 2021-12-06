@@ -17,8 +17,8 @@
                 <div class="lastname">{{ lastname }}</div>
             </div>
             <div class="option">
-                <button v-if="toggletext == 0" @click="buttonModif()" class="modif">Modifer ma photo</button>
-                <button v-else-if="toggletext == 1" @click="buttonModif()" class="modif">Annuler la modification</button>
+                <button v-if="toggletext == false" @click="buttonModif()" class="modif">Modifer ma photo</button>
+                <button v-else-if="toggletext == true" @click="buttonModif()" class="modif">Annuler la modification</button>
                 <button v-if="admin == 1 || userid >= 1" @click="deleteUser(userid)" class="suppr">Supprimer mon profil</button>
             </div>
             <div class="statut">
@@ -37,7 +37,7 @@ export default {
     name: 'UserAccount',
     data() {
         return {
-            toggletext: '0',
+            toggletext: false,
             token: '',
             image: '',
             firstname: '',
@@ -63,10 +63,10 @@ export default {
         buttonModif() {
             const form = document.querySelector('form');
             form.classList.toggle('none');
-            if (this.toggletext == 0) {
-                this.toggletext = 1;
+            if (this.toggletext == false) {
+                this.toggletext = true;
             } else {
-                this.toggletext = 0;
+                this.toggletext = false;
             }
         },
         modifyImage() {

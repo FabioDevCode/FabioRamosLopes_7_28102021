@@ -51,23 +51,25 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-    post.findOne({ where: { id: req.params.id }})
+    Post.findOne({ where: { id: req.params.id }})
     .then((post) => {
         let image = post.media.split('/images/')[1]
 
         const postObj = {
-            message: req.body.message,
-            media: req.protocol + "://" + req.get("host") + "/images/" + req.file.filename,
-            date: req.body.date,
+            message: req.body.message ? req.body.message : post.message,
+            media: req.file ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}` : post.media,
         }
+
         if(req.file) {
             fs.unlink("images/"+ image, () => {
                 Post.update({ ...postObj, id: req.params.id}, { where: { id: req.params.id}})
+
                 .then(() => res.status(200).json({ message: "La publication a bien été modifée."}))
                 .catch((error) => res.status(400).json(error))
             })
         } else {
             Post.update({ ...postObj, id: req.params.id}, { where: { id: req.params.id}})
+
             .then(() => res.status(200).json({ message: "La publication a bien été modifée."}))
             .catch((error) => res.status(400).json(error))
         }
