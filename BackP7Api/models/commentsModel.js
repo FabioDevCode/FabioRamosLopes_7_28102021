@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true
         },
         comment: {
-            type: DataTypes.INTEGER.UNSIGNED,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         postId: {
@@ -55,7 +55,7 @@ module.exports = function(sequelize, DataTypes) {
                 name: "fk_comments_userId",
                 using: "BTREE",
                 fields: [
-                    { name: "userID" },
+                    { name: "userId" },
                 ]
             }
         ]

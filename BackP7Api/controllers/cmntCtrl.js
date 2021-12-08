@@ -1,4 +1,3 @@
-const fs = require('fs');
 const db = require('../models');
 
 const Comment = db.comment;
@@ -8,8 +7,8 @@ exports.createComment = (req, res, next) => {
         comment: req.body.comment,
         postId: req.body.postId,
         userId: req.body.userId,
-        createdAt: req.body.createdAt
-    };
+        createdAt: req.body.createdAt,
+    }
     Comment.create(newComment)
     .then(() => res.status(200).json({ message : "Commentaire créé !"}))
     .catch((error) => res.status(400).json({ error }));

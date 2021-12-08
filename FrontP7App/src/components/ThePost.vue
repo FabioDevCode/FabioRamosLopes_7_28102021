@@ -114,9 +114,9 @@
             </div>
             
             <form @submit.prevent>
-                <label for="">Laissez un commentaire</label>
-                <textarea name="" id=""></textarea>
-                <button>Commenter</button>
+                <label for="comment">Laissez un commentaire</label>
+                <textarea v-model="comment" name="comment" id="comment"></textarea>
+                <button @click="CommentThisPost()" >Commenter</button>
             </form>
             
 
@@ -130,6 +130,8 @@
 
 
 <script>
+// import axios from 'axios';
+
 export default {
     name: 'APost',
     data() {
@@ -139,8 +141,8 @@ export default {
             ownavatar: '',
             ownfirstname: '',
             ownlastname: '',
+            
             postid: '',
-
             userpost: '',
             media: '',
             message: '',
@@ -148,6 +150,9 @@ export default {
 
             allusers: [],
             allcomments: [],
+
+            comment: '',
+            createdAt: '',
 
             errors: '',
         }
@@ -204,6 +209,57 @@ export default {
 
                 this.allusers = response;
             })
+        },
+        verifComment() {
+            if(this.comment.length >= 2) { 
+                return true
+            } else {
+                alert("Votre commentaires doit contenir 2 caratères ou plus.");
+                return false
+            }
+        },
+        CommentThisPost() {
+            if(this.verifComment()) {
+
+                const dateX = new Date();
+                const createdAt = dateX.toLocaleString('en-GB', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                });
+                this.createdAt = createdAt;
+
+                const comment = {
+                    comment: this.comment,
+                    postId: this.postid,
+                    userId: this.ownid,
+                    createdAt: this.createdAt
+                }
+                
+                fetch(`http://localhost:3000/api/posts/${this.postid}/comments/`,
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`
+                    },
+                    method: "POST",
+                    body: JSON.stringify(comment)
+                })
+                .then(response => response.json())
+                .then(() => {
+                        alert("Votre commentaire à bien été créé !")
+                            
+                        this.comment = '',
+                        this.createdAt = '',
+
+                        location.reload();
+                })
+                .catch(error => console.log(error))
+
+            }
         },
 
     }
