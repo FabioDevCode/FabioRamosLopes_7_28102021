@@ -5,7 +5,6 @@ const Post = db.post;
 
 
 exports.createPost = (req, res, next) => {
-
     if(req.file === undefined) {
         const newPost = {
             userId: req.body.userId,

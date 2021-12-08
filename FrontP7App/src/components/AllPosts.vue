@@ -257,9 +257,9 @@ a {
     object-fit: cover;
     object-position: center;
     border-radius: 8px;
-    width: 60%;
-    min-width: 60%;
-    max-width: 60%;
+    width: 55%;
+    min-width: 55%;
+    max-width: 55%;
     height: auto;
     margin-right: 15px;
     box-shadow: 5px 0px 8px rgba(0, 0, 0, .3);
@@ -274,6 +274,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     font: 1em;
     color: white;
     font-weight: 600;
@@ -282,6 +283,14 @@ a {
     width: 100%;
     border-radius: 999px;
     cursor: pointer;
+}
+
+.button a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
 .button:active {
