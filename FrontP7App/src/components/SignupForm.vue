@@ -15,15 +15,19 @@
 
                 <label for="firstname">PRÉNOM</label>
                 <input v-model="firstname" type="text" id="firstname">
+                <p class="thefirst cache">Votre prénom doit contenir 2 caractères minimum</p>
 
                 <label for="lastname">NOM</label>
                 <input v-model="lastname" type="text" id="lastname">
+                <p class="thelast cache">Votre nom doit contenir 2 caractères minimum</p>
 
                 <label for="email">E-MAIL</label>
                 <input v-model="email" type="email" id="email">
+                <p class="email cache">email non valide</p>
 
                 <label for="password">MOT DE PASSE</label>
                 <input v-model="password" type="password" id="password">
+                <p class="password cache">Votre mot de passe doit contenir :<br> 1 majuscule, 1 minuscule, 1 chiffre et doit faire entre 8 et 100 caractères</p>
 
                 <button @click="SubmitForm()">S'incrire</button>
             </form>
@@ -46,28 +50,81 @@ export default {
     },
     methods: {
         SubmitForm() {
-            let FormSend = {
-                firstname: this.firstname,
-                lastname: this.lastname,
-                email: this.email,
-                password: this.password
-            }
+            if(this.veriForm()) {
+                
+                let FormSend = {
+                    firstname: this.firstname,
+                    lastname: this.lastname,
+                    email: this.email,
+                    password: this.password
+                };
 
-            fetch("http://localhost:3000/api/auth/signup",
-            {
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify(FormSend)
-            })
-            .then(response => response.json())
-            .catch(error => console.log(error))
-            //------------------------------------
-            setTimeout(200);
-            alert("Bienvenue ! Veuillez-vous connecter.")
-            window.location = "/"
+                fetch("http://localhost:3000/api/auth/signup",
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify(FormSend)
+                })
+                .then(response => response.json())
+                .catch(error => console.log(error))
+                //------------------------------------
+                setTimeout(200);
+                alert("Bienvenue ! Veuillez-vous connecter.")
+                window.location = "/"
+            }
+        },
+        veriForm() {
+
+            let emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+            let mdpRegex = new RegExp ('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$', 'g');
+            let emailTest = emailRegex.test(this.email);
+            let mdpTest = mdpRegex.test(this.password);
+
+            const first = this.firstname.length;
+            const last = this.lastname.length;
+
+            //-------------------------------------------------
+            if(first <= 1) {
+                let fi = document.querySelector('.thefirst');
+                fi.classList.remove('cache');
+            } else {
+                let fi = document.querySelector('.thefirst');
+                fi.classList.add('cache');
+            }
+            //--------------------------------------------------
+            if(last <= 1) {
+                let la = document.querySelector('.thelast');
+                la.classList.remove('cache');
+            } else {
+                let la = document.querySelector('.thelast');
+                la.classList.add('cache');
+            }
+            //--------------------------------------------------
+            if(!emailTest) {
+                let msg = document.querySelector('.email');
+                msg.classList.remove('cache');
+            } else {
+                let msg = document.querySelector('.email');
+                msg.classList.add('cache');
+            }
+            //--------------------------------------------------
+            if(!mdpTest) {
+                let msg = document.querySelector('.password');
+                msg.classList.remove('cache');
+            } else {
+                let msg = document.querySelector('.password');
+                msg.classList.add('cache');
+            }
+            //--------------------------------------------------
+
+            if(this.firstname.length >= 2 && this.lastname.length >= 2 && mdpTest && emailTest) {
+                return true
+            } else {
+                return false
+            }
         },
 
     }
@@ -181,6 +238,16 @@ nav .inscrire {
 
 .bloc-form form button:active {
     box-shadow: 5px 5px 12px rgba(66, 47, 47, 0.2);
+}
+
+.cache {
+    display: none;
+}
+
+.bloc-form form p {
+    color: red;
+    font-weight: bold;
+    font-size: .9em;
 }
 
 </style>
