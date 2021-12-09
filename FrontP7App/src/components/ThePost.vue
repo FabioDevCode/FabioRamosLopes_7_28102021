@@ -21,110 +21,54 @@
             <div class="post-content">
 
                 <img v-if="this.media" :src="this.media" alt="image du post">
-                <img v-else src="" alt="" id="none">
+                <img v-else src="" alt="" class="none">
                 <p> {{ message }} </p>
 
             </div>
 
-
             <div class="allcomments">
-                <h1>3 commentaires</h1>
-                <div class="comment">
-                    <div class="commentuser">
-                        <div class="bandeauuser">
-                            <img src="../assets/randomuser.jpg" alt="photo du commentateur">
-                            <div class="blocname">
-                                    <p> Beta <span> TESTEUR </span></p>
-                                    <p class="datecomment">Date du commentaire</p>
+                <h1 v-if="allcomments.length <= 1"> {{ allcomments.length }} commentaire</h1>
+                <h1 v-else> {{ allcomments.length }} commentaires</h1>
+
+                <div :key="com.id" class="comment" v-for="com in allcomments">
+
+                    <div :key="user.id" class="commentuser" v-for="user in allusers">
+                        <div class="bandeauuser" v-if="user.id == com.userId">
+
+                            <img v-if="user.avatar" :src="user.avatar" alt="photo du commentateur">
+                            <img v-else src="../assets/randomuser.jpg" alt="photo du commentateur">
+                            <div class="blocname" v-if="user.id == com.userId">
+                                    <p> {{ user.firstname }} <span> {{ user.lastname }} </span></p>
+                                    <p class="datecomment"> {{ com.createdAt }} </p>
                             </div>
+                            <div v-else class="none"></div>
                         </div>
 
-                        <div class="bandeaubtn"> 
-                            <button class="modify"><a> <i class="fas fa-pen"></i> </a></button>
-                            <button class="delete"><i class="fas fa-trash-alt"></i></button>
+                        <div class="bandeaubtn" v-if="user.id == com.userId"> 
+                            <button class="modify" @click="buttonModif(com.id)" v-if="com.userId == ownid"><i class="fas fa-pen"></i></button>
+                            <button class="delete" @click="deleteComment(com.id)" v-if="com.userId == ownid || admin == 1"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </div>
                     <div class="commenttext">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type 
-                        specimen book. It has survived not only five centuries, but also the leap into 
-                        electronic typesetting, remaining essentially unchanged. It was popularised in 
-                        the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                        and more recently with desktop publishing software like Aldus PageMaker including 
-                        versions of Lorem Ipsum.
+                        {{ com.comment }}
                     </div>
+                    <form @submit.prevent class="thisform none" :id="com.id">
+                        <textarea v-model="com.comment" name="newcomment" id="newcomment"></textarea>
+                        <button @click="modifyComment(com.id)" >Modifier</button>
+                    </form>
                 </div>
-
-                <div class="comment">
-                    <div class="commentuser">
-                        <div class="bandeauuser">
-                            <img src="../assets/randomuser.jpg" alt="photo du commentateur">
-                            <div class="blocname">
-                                    <p> Beta <span> TESTEUR </span></p>
-                                    <p class="datecomment">Date du commentaire</p>
-                            </div>
-                        </div>
-
-                        <div class="bandeaubtn"> 
-                            <button class="modify"><a> <i class="fas fa-pen"></i> </a></button>
-                            <button class="delete"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </div>
-                    <div class="commenttext">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type 
-                        specimen book. It has survived not only five centuries, but also the leap into 
-                        electronic typesetting, remaining essentially unchanged. It was popularised in 
-                        the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                        and more recently with desktop publishing software like Aldus PageMaker including 
-                        versions of Lorem Ipsum.
-                    </div>
-                </div>
-
-                <div class="comment">
-                    <div class="commentuser">
-                        <div class="bandeauuser">
-                            <img src="../assets/randomuser.jpg" alt="photo du commentateur">
-                            <div class="blocname">
-                                    <p> Beta <span> TESTEUR </span></p>
-                                    <p class="datecomment">Date du commentaire</p>
-                            </div>
-                        </div>
-
-                        <div class="bandeaubtn"> 
-                            <button class="modify"><a> <i class="fas fa-pen"></i> </a></button>
-                            <button class="delete"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </div>
-                    <div class="commenttext">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                        when an unknown printer took a galley of type and scrambled it to make a type 
-                        specimen book. It has survived not only five centuries, but also the leap into 
-                        electronic typesetting, remaining essentially unchanged. It was popularised in 
-                        the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-                        and more recently with desktop publishing software like Aldus PageMaker including 
-                        versions of Lorem Ipsum.
-                    </div>
-                </div>
-
 
             </div>
             
-            <form @submit.prevent>
+
+            <form @submit.prevent id="fromtocomment">
                 <label for="comment">Laissez un commentaire</label>
                 <textarea v-model="comment" name="comment" id="comment"></textarea>
                 <button @click="CommentThisPost()" >Commenter</button>
             </form>
             
-
-
-
         </div>
     </div>
-
 
 </template>
 
@@ -141,6 +85,7 @@ export default {
             ownavatar: '',
             ownfirstname: '',
             ownlastname: '',
+            admin: '',
             
             postid: '',
             userpost: '',
@@ -155,12 +100,14 @@ export default {
             createdAt: '',
 
             errors: '',
+
         }
     },
     mounted() {
         this.started();
         this.getThePost();
         this.getAllUsers();
+        this.getAllComments();
     },
     methods: {
         started() {
@@ -169,6 +116,7 @@ export default {
             this.ownavatar = JSON.parse(localStorage.user).avatar;
             this.ownfirstname = JSON.parse(localStorage.user).firstname;
             this.ownlastname = JSON.parse(localStorage.user).lastname;
+            this.admin = JSON.parse(localStorage.user).admin;
 
             const urlWindow = window.location.search;
             let idPost = urlWindow.slice(1);
@@ -176,7 +124,6 @@ export default {
             this.postid = idPost
         },
         getThePost() {
-
             fetch(`http://localhost:3000/api/posts/${this.postid}`,
             {
                 headers: 
@@ -250,18 +197,73 @@ export default {
                 })
                 .then(response => response.json())
                 .then(() => {
-                        alert("Votre commentaire à bien été créé !")
+                    alert("Votre commentaire à bien été créé !")
                             
-                        this.comment = '',
-                        this.createdAt = '',
+                    this.comment = '',
+                    this.createdAt = '',
 
-                        location.reload();
+                    location.reload();
                 })
                 .catch(error => console.log(error))
-
             }
         },
+        getAllComments() {
+            fetch(`http://localhost:3000/api/posts/${this.postid}/comments/`,
+            {
+                headers: 
+                {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.token}`,
+                }
+            })
+            .then(response => response.json())
+            .then((response) => {
 
+                this.allcomments = response;
+            })
+        },
+        deleteComment(comId) {
+            fetch(`http://localhost:3000/api/posts/${this.postid}/comments/${comId}`, 
+            {
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`,
+                },
+                method: "DELETE",
+            })
+            .then(() => {
+                alert("Le commentaire a bien été supprimé.");
+                location.reload();
+            })
+        },
+        buttonModif(ID) {
+            const theForm = document.getElementById(`${ID}`);
+            const theActualTxt = document.getElementById(`${ID}`).previousElementSibling;
+
+            theForm.classList.toggle("none");
+            theActualTxt.classList.toggle("none");
+        },
+        modifyComment(comId) {
+            let newTxt = document.getElementById(`${comId}`).firstChild;
+
+            const upComment = {
+                comment: newTxt.value,
+            };
+
+            fetch(`http://localhost:3000/api/posts/${this.postid}/comments/${comId}`, 
+            {
+                headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`,
+                },
+                method: "PUT",
+                body: JSON.stringify(upComment),
+            })
+            .then(() => {
+                alert("Le commentaire a bien été modifé.");
+                location.reload();
+            })
+        }
     }
 }
 </script>
@@ -278,10 +280,6 @@ export default {
     overflow: hidden;
     width: auto;
     min-height: 100vh;
-}
-
-#none {
-    display: none;
 }
 
 .apost .bandeauAllposts {
@@ -508,6 +506,26 @@ form button {
 
 form button:active {
     transform: scale(.95);
+}
+
+.allcomments .comment form.thisform {
+    box-shadow: none;
+    margin-top: -8px;
+}
+
+.allcomments .comment form.thisform textarea {
+    min-height: 100px;
+    height: auro;
+}
+
+.allcomments .comment form.thisform button {
+    width: max-content;
+    padding: 0 35px;
+}
+
+
+#none, .none {
+    display: none;
 }
 
 @media screen and (max-width: 1024px) {

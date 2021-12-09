@@ -1,6 +1,6 @@
 <template>
     <div class="allposts">
-        <div :key="post.id" v-for="(post) in allposts" class="post">
+        <div :key="post.id" v-for="post in allposts" class="post">
 
             <div :key="user.id" v-for="user in allusers">
                 <div class="bandeauAllposts" v-if="post.userId == user.id">
@@ -128,11 +128,6 @@ export default {
             }
 
         },
-        goToPost() {
-
-
-        }
-
     }
 
 }
