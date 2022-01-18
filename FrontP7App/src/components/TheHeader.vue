@@ -67,7 +67,7 @@ export default {
     position: fixed;
     width: 100vw;
     height: auto;
-    background: #FD3E15;
+    background: #ac1f00;
     box-shadow: 0 8px 12px rgba(0, 0, 0, .4);
 }
 
@@ -77,7 +77,7 @@ header {
     align-items: center;
     height: 70px;
     overflow: hidden;
-    background: #FD3E15;
+    background: #ac1f00;
     width: 80%;
     min-width: 320px;
     margin: 0 auto;
@@ -109,7 +109,7 @@ nav {
     height: 60px;
     margin-top: 10px;
     border-radius: 15px 15px 0 0;
-    background-color: rgb(177, 39, 15);
+    background-color: #c42400;
 }
 
 .link:active {

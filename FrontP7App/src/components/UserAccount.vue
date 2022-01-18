@@ -259,7 +259,7 @@ export default {
 }
 
 .suppr {
-    background: rgb(226, 55, 24);
+    background: #ac1f00;
 }
 
 .option button:active {

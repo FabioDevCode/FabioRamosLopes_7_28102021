@@ -172,7 +172,7 @@ export default {
     position: relative;
     overflow: hidden;
     background: white;
-    background: linear-gradient(180deg, #FD3E15 0%, rgba(255,250,255,1) 12%);
+    background: linear-gradient(180deg, #ac1f00 0%, rgba(255,250,255,1) 12%);
     border: 1px solid black;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, .3);
     height: 80vh;
@@ -261,7 +261,7 @@ export default {
     color: white;
     font-size: 1.2em;
     font-weight: bold;
-    background: #FD3E15;
+    background: #ac1f00;
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, .3);
     margin: 0 auto;
     margin-top: 10vh;

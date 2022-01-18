@@ -336,7 +336,7 @@ export default {
 }
 
 .bandeaubtn .delete {
-    background: #FD3E15;
+    background: #ac1f00;
 }
 
 .blocname p span {
@@ -415,7 +415,7 @@ h1 {
     font: 1em;
     color: white;
     font-weight: 600;
-    background-color: #f8512c;
+    background-color: #ac1f00;
     height: 45px;
     width: 100%;
     border-radius: 999px;
@@ -500,7 +500,7 @@ form button {
     color: white;
     font-size: 1.2em;
     font-weight: bold;
-    background: #FD3E15;
+    background: #ac1f00;
     margin: 0 auto;
 }
 

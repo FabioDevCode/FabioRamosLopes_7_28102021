@@ -78,7 +78,7 @@ export default {
         },
         veriForm() {
 
-            let emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+            let emailRegex = new RegExp('^[a-zA-Z0-9-_]+[a-zA-Z0-9.-_]*@[a-zA-Z0-9-_]{2,}.[a-zA-Z.-_]+[a-z-_]+$', 'g');
             let mdpRegex = new RegExp ('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$', 'g');
             let emailTest = emailRegex.test(this.email);
             let mdpTest = mdpRegex.test(this.password);
@@ -150,7 +150,7 @@ nav {
 
 .nav-text {
     font-weight: 600;
-    color: #FD3E15;
+    color: #ac1f00;
 }
 
 nav .lien {
@@ -161,14 +161,14 @@ nav .lien {
     font-weight: 600;
     width: 50%;
     text-decoration: none;
-    background: #FD3E15;
+    background: #ac1f00;
     height: 100%;
 }
 
 nav .inscrire {
     cursor: default;
     background: whitesmoke;
-    color: grey;
+    color: #303030;
 }
 
 .forms-log {
@@ -198,7 +198,7 @@ nav .inscrire {
 
 .bloc-form form h3 {
     text-align: center;
-    border-bottom: 2px solid #FD3E15;
+    border-bottom: 2px solid #ac1f00;
     padding-bottom: 15px;
     margin-bottom: 15px;
 }
@@ -232,7 +232,7 @@ nav .inscrire {
     border: none;
     height: 50px;
     border-radius: 25px;
-    background-color: #FD3E15;
+    background-color: #ac1f00;
     cursor: pointer;
 }
 

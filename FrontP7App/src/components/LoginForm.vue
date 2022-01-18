@@ -15,9 +15,11 @@
 
                 <label for="email">E-MAIL</label>
                 <input v-model="email" type="email" id="email">
+                <p class="email cache">email non valide</p>
 
                 <label for="password">MOT DE PASSE</label>
                 <input v-model="password" type="password" id="password">
+                <p class="password cache">Votre mot de passe doit contenir :<br> 1 majuscule, 1 minuscule, 1 chiffre et doit faire entre 8 et 100 caractères</p>
 
                 <button @click="SubmitForm()">Se Connecter</button>
             </form>
@@ -37,29 +39,62 @@ export default {
     },
     methods: {
         SubmitForm() {
-            let FormSend = {
-                email: this.email,
-                password: this.password
-            }
+            if(this.veriForm()) {
+                let FormSend = {
+                    email: this.email,
+                    password: this.password
+                }
 
-            fetch("http://localhost:3000/api/auth/login",
-            {
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                },
-                method: "POST",
-                body: JSON.stringify(FormSend)
-            })
-            .then(response => response.json())
-            .then(function(res) {
-                localStorage.setItem("user", JSON.stringify(res));
-            })
-            .then(() => {
-                this.$router.push('/home');
-            })
-            .catch((error) => console.log(error))
-        }
+                fetch("http://localhost:3000/api/auth/login",
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify(FormSend)
+                })
+                .then(response => response.json())
+                .then(function(res) {
+                    localStorage.setItem("user", JSON.stringify(res));
+                })
+                .then(() => {
+                    this.$router.push('/home');
+                })
+                .catch((error) => console.log(error))
+            }
+        },
+        veriForm() {
+
+            let emailRegex = new RegExp('^[a-zA-Z0-9-_]+[a-zA-Z0-9.-_]*@[a-zA-Z0-9-_]{2,}.[a-zA-Z.-_]+[a-z-_]+$', 'g');
+            let mdpRegex = new RegExp ('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,100}$', 'g');
+            let emailTest = emailRegex.test(this.email);
+            let mdpTest = mdpRegex.test(this.password);
+
+            //--------------------------------------------------
+            if(!emailTest) {
+                let msg = document.querySelector('.email');
+                msg.classList.remove('cache');
+            } else {
+                let msg = document.querySelector('.email');
+                msg.classList.add('cache');
+            }
+            //--------------------------------------------------
+            if(!mdpTest) {
+                let msg = document.querySelector('.password');
+                msg.classList.remove('cache');
+            } else {
+                let msg = document.querySelector('.password');
+                msg.classList.add('cache');
+            }
+            //--------------------------------------------------
+
+            if(mdpTest && emailTest) {
+                return true
+            } else {
+                return false
+            }
+        },
     }
 };
 </script>
@@ -90,14 +125,14 @@ nav .lien {
     font-weight: 600;
     width: 50%;
     text-decoration: none;
-    background: #FD3E15;
+    background: #ac1f00;
     height: 100%;
 }
 
 nav .connecter {
     cursor: default;
     background: whitesmoke;
-    color: grey;
+    color: #303030;
 }
 
 .forms-log {
@@ -127,7 +162,7 @@ nav .connecter {
 
 .bloc-form form h3 {
     text-align: center;
-    border-bottom: 2px solid #FD3E15;
+    border-bottom: 2px solid #ac1f00;
     padding-bottom: 15px;
     margin-bottom: 15px;
 }
@@ -161,12 +196,22 @@ nav .connecter {
     border: none;
     height: 50px;
     border-radius: 25px;
-    background-color: #FD3E15;
+    background-color: #ac1f00;
     cursor: pointer;
 }
 
 .bloc-form form button:active {
     box-shadow: 5px 5px 12px rgba(66, 47, 47, 0.2);
+}
+
+.cache {
+    display: none;
+}
+
+.bloc-form form p {
+    color: red;
+    font-weight: bold;
+    font-size: .9em;
 }
 
 </style>

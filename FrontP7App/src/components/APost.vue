@@ -3,15 +3,15 @@
         <div class="post">
 
             <div class="bandeauAllposts">
-                <div class="bandeauuser" >
-                    <img v-if="this.avatar" :src="this.avatar" alt="photo du profil de l'utilisatuer qui a écris la publication">
+                <div class="bandeauuser">
+                    <img v-if="this.userPostAvatar" :src="this.userPostAvatar" alt="photo du profil de l'utilisatuer qui a écris la publication">
                     <img v-else src="../assets/randomuser.jpg" alt="photo du profil de l'utilisatuer qui a écris la publication">
                     <div class="blocname">
-                        <p>{{ firstname }}<span> {{ lastname }}</span></p>
+                        <p>{{ userPostFirst }}<span> {{ userPostName }}</span></p>
                     </div>
                 </div>
             </div>
-
+ 
             <div class="post-content">
                 <form @submit.prevent id="">
                     <h1>Modifiez votre publication</h1>
@@ -26,7 +26,7 @@
 
                         <div class="blocfromright">
                             <label for="message">Votre message :</label>
-                            <textarea v-model="newmsg" class="textarea" name="message" :placeholder="this.message"></textarea>
+                            <textarea v-model="newmsg" class="textarea" id="message" name="message" :placeholder="this.message"></textarea>
                         </div>
                     </div>
 
@@ -70,6 +70,11 @@ export default {
             file: null,
             newmsg: '',
 
+            userPostId: '',
+            userPostAvatar: '',
+            userPostFirst: '',
+            userPostName: '',
+
             errors: '',
         }
     },
@@ -101,11 +106,12 @@ export default {
             })
             .then(response => response.json())
             .then((response) => {
-
+                
                 this.media = response.media;
                 this.message = response.message;
                 this.date = response.date;
                 this.newmsg = response.message;
+                this.userPostId = response.userId;
             })
 
         },
@@ -304,7 +310,7 @@ button {
     color: white;
     font-size: 1.2em;
     font-weight: bold;
-    background: #FD3E15;
+    background: #ac1f00;
     margin: 0 auto;
 }
 
@@ -362,7 +368,7 @@ button {
 }
 
 .bandeaubtn .delete {
-    background: #FD3E15;
+    background: #ac1f00;
 }
 
 .blocname p span {
@@ -432,7 +438,7 @@ button {
     font: 1em;
     color: white;
     font-weight: 600;
-    background-color: #f8512c;
+    background-color: #ac1f00;
     height: 45px;
     width: 100%;
     border-radius: 999px;

@@ -186,7 +186,7 @@ export default {
     height: 50px;
     border-radius: 25px;
     color: white;
-    background: rgb(226, 55, 24);
+    background: #ac1f00;
 }
 
 .option button:active {

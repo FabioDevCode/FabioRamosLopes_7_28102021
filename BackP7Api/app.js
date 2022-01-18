@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const path = require('path');
 const helmet = require("helmet");
 require('dotenv').config();
+const db = require('./models');
+const Initial = db.sequelize;
 
 
 const userRoutes = require('./routes/userRoutes');
@@ -10,7 +12,7 @@ const postRoutes = require('./routes/postRoutes');
 
 
 const app = express();
-
+Initial.sync();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*'); 

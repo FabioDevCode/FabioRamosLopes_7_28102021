@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="bandeaubtn" v-if="post.userId == userId || admin == 1" > 
-                        <button v-if="post.userId == userId" class="modify"><a :href="url + post.id"> <i class="fas fa-pen"></i> </a></button>
+                        <button v-if="post.userId == userId" class="modify"><a :href="url + post.id"><i class="fas fa-pen"></i></a></button>
                         <button class="delete" @click="deleteAPost(post.id)"><i class="fas fa-trash-alt"></i></button>
                     </div>
 
@@ -129,8 +129,8 @@ export default {
 
         },
     }
-
 }
+
 
 </script>
 
@@ -207,7 +207,7 @@ a {
 }
 
 .bandeaubtn .delete {
-    background: #FD3E15;
+    background: #ac1f00;
 }
 
 .blocname p span {
@@ -273,7 +273,7 @@ a {
     font: 1em;
     color: white;
     font-weight: 600;
-    background-color: #f8512c;
+    background-color: #ac1f00;
     height: 45px;
     width: 100%;
     border-radius: 999px;

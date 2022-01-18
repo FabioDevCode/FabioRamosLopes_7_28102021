@@ -87,7 +87,7 @@ export default {
     overflow: hidden;
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, .3);
     background: white;
-    background: linear-gradient(180deg, #FD3E15 2%, rgba(255,250,255,1) 40%);
+    background: linear-gradient(180deg, #ac1f00 2%, rgba(255,250,255,1) 40%);
     flex-shrink: 0;
 }
 
